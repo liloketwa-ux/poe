@@ -1,0 +1,93 @@
+digraph RaceDayERD {
+  graph [rankdir=LR, bgcolor="white", splines=ortho, nodesep=0.7, ranksep=1.0, pad=0.3];
+  node [shape=plain, fontname="Arial"];
+  edge [fontname="Arial", fontsize=10, color="#333333"];
+
+  Users [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#1F4E78"><FONT COLOR="white"><B>Users</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK UserId</B> : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">FirstName : NVARCHAR(60)</TD></TR>
+      <TR><TD ALIGN="LEFT">LastName : NVARCHAR(60)</TD></TR>
+      <TR><TD ALIGN="LEFT">Email : NVARCHAR(255) UNIQUE</TD></TR>
+      <TR><TD ALIGN="LEFT">PasswordHash : NVARCHAR(255)</TD></TR>
+      <TR><TD ALIGN="LEFT">Role : NVARCHAR(20)</TD></TR>
+      <TR><TD ALIGN="LEFT">Phone : NVARCHAR(30) NULL</TD></TR>
+      <TR><TD ALIGN="LEFT">CreatedAt : DATETIME2</TD></TR>
+      <TR><TD ALIGN="LEFT">IsActive : BIT</TD></TR>
+    </TABLE>>];
+
+  Events [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#1F4E78"><FONT COLOR="white"><B>Events</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK EventId</B> : INT</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK OrganiserId</B> : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">Name : NVARCHAR(150)</TD></TR>
+      <TR><TD ALIGN="LEFT">Description : NVARCHAR(500) NULL</TD></TR>
+      <TR><TD ALIGN="LEFT">EventDate : DATE</TD></TR>
+      <TR><TD ALIGN="LEFT">RegistrationOpen : DATE</TD></TR>
+      <TR><TD ALIGN="LEFT">RegistrationClose : DATE</TD></TR>
+      <TR><TD ALIGN="LEFT">Venue : NVARCHAR(150)</TD></TR>
+      <TR><TD ALIGN="LEFT">City : NVARCHAR(100)</TD></TR>
+      <TR><TD ALIGN="LEFT">Province : NVARCHAR(100)</TD></TR>
+      <TR><TD ALIGN="LEFT">DistanceKm : DECIMAL(6,2)</TD></TR>
+      <TR><TD ALIGN="LEFT">EventType : NVARCHAR(20)</TD></TR>
+      <TR><TD ALIGN="LEFT">Status : NVARCHAR(20)</TD></TR>
+    </TABLE>>];
+
+  Routes [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#1F4E78"><FONT COLOR="white"><B>Routes</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK RouteId</B> : INT</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK EventId</B> : INT UNIQUE</TD></TR>
+      <TR><TD ALIGN="LEFT">StartLocation : NVARCHAR(200)</TD></TR>
+      <TR><TD ALIGN="LEFT">FinishLocation : NVARCHAR(200)</TD></TR>
+      <TR><TD ALIGN="LEFT">RouteUrl : NVARCHAR(500) NULL</TD></TR>
+      <TR><TD ALIGN="LEFT">ElevationGainM : INT NULL</TD></TR>
+      <TR><TD ALIGN="LEFT">Notes : NVARCHAR(500) NULL</TD></TR>
+    </TABLE>>];
+
+  Categories [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#1F4E78"><FONT COLOR="white"><B>Categories</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK CategoryId</B> : INT</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK EventId</B> : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">Name : NVARCHAR(100)</TD></TR>
+      <TR><TD ALIGN="LEFT">DistanceKm : DECIMAL(6,2)</TD></TR>
+      <TR><TD ALIGN="LEFT">EntryFee : DECIMAL(10,2)</TD></TR>
+      <TR><TD ALIGN="LEFT">MaxEntries : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">MinAge : INT NULL</TD></TR>
+      <TR><TD ALIGN="LEFT">MaxAge : INT NULL</TD></TR>
+    </TABLE>>];
+
+  Enrolments [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#1F4E78"><FONT COLOR="white"><B>Enrolments</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK EnrolmentId</B> : INT</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK ParticipantId</B> : INT</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK EventId</B> : INT</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK CategoryId</B> : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">EnrolmentDate : DATETIME2</TD></TR>
+      <TR><TD ALIGN="LEFT">Status : NVARCHAR(20)</TD></TR>
+    </TABLE>>];
+
+  Results [label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#1F4E78"><FONT COLOR="white"><B>Results</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK ResultId</B> : INT</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK EnrolmentId</B> : INT UNIQUE</TD></TR>
+      <TR><TD ALIGN="LEFT">FinishTime : TIME(0) NULL</TD></TR>
+      <TR><TD ALIGN="LEFT">OverallPosition : INT NULL</TD></TR>
+      <TR><TD ALIGN="LEFT">CategoryPosition : INT NULL</TD></TR>
+      <TR><TD ALIGN="LEFT">AveragePace : DECIMAL(6,2) NULL</TD></TR>
+      <TR><TD ALIGN="LEFT">FinishStatus : NVARCHAR(20)</TD></TR>
+    </TABLE>>];
+
+  Users -> Events [label="1 : many\norganises"];
+  Users -> Enrolments [label="1 : many\nparticipates"];
+  Events -> Routes [label="1 : 0..1\nhas route"];
+  Events -> Categories [label="1 : many\nhas categories"];
+  Events -> Enrolments [label="1 : many\nhas enrolments"];
+  Categories -> Enrolments [label="1 : many\nselected by"];
+  Enrolments -> Results [label="1 : 0..1\nproduces"];
+}
