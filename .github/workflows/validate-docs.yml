@@ -1,0 +1,39 @@
+name: Validate RaceDay Part 1
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate-part1:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate required RaceDay files
+        shell: bash
+        run: |
+          set -e
+
+          test -d docs
+          test -f docs/RaceDay_ERD.png
+          test -f docs/RaceDay_ERD.pdf
+          test -f docs/raceday-endpoint-plan.md
+          test -f docs/RaceDayDB.sql
+          test -f README.md
+
+          echo "Required RaceDay Part 1 files are present."
+
+      - name: Validate SQL file is non-empty
+        shell: bash
+        run: |
+          test -s docs/RaceDayDB.sql
+          grep -q "CREATE TABLE dbo.Users" docs/RaceDayDB.sql
+          grep -q "CREATE TABLE dbo.Events" docs/RaceDayDB.sql
+          grep -q "CREATE TABLE dbo.Categories" docs/RaceDayDB.sql
+          grep -q "CREATE TABLE dbo.Enrolments" docs/RaceDayDB.sql
+          grep -q "CREATE TABLE dbo.Results" docs/RaceDayDB.sql
+          grep -q "CREATE TABLE dbo.Routes" docs/RaceDayDB.sql
+          echo "SQL schema validation passed."
