@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CampusConnect - an accessible student hub for study groups, campus events, resources and personal planning.">
+  <title>CampusConnect - Student support hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#home" data-route="home" aria-label="CampusConnect home">
+        <span class="brand-mark" aria-hidden="true">C</span>
+        <span>CampusConnect</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+        <ul id="primary-nav" class="nav-list">
+          <li><a href="#home" data-route="home">Home</a></li>
+          <li><a href="#groups" data-route="groups">Study groups</a></li>
+          <li><a href="#events" data-route="events">Events</a></li>
+          <li><a href="#resources" data-route="resources">Resources</a></li>
+          <li><a href="#plan" data-route="plan">My plan</a></li>
+        </ul>
+      </nav>
+      <button class="icon-btn" id="accessibilityBtn" type="button" aria-haspopup="dialog" aria-controls="accessibilityDialog" aria-label="Open accessibility settings">Accessibility</button>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+    <div class="route" id="homeRoute">
+      <section class="hero section" aria-labelledby="hero-title">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">A student-first digital hub</p>
+            <h1 id="hero-title">Find your people. Plan your week. Get support.</h1>
+            <p class="hero-copy">CampusConnect brings study groups, campus events, practical resources and a simple personal plan into one clear space.</p>
+            <div class="button-row">
+              <a class="btn btn-primary" href="#groups" data-route="groups">Find a study group</a>
+              <a class="btn btn-secondary" href="#resources" data-route="resources">Browse resources</a>
+            </div>
+            <div class="trust-row" aria-label="Design commitments">
+              <span>Keyboard friendly</span><span>Mobile ready</span><span>WCAG 2.2 informed</span>
+            </div>
+          </div>
+          <div class="hero-panel" aria-label="Weekly overview example">
+            <div class="panel-top"><span>Today</span><strong>Tuesday</strong></div>
+            <div class="hero-stat"><span class="stat-number">3</span><span>things on your plan</span></div>
+            <div class="mini-list">
+              <div><span class="status-dot done"></span><span>Finish database lab</span><strong>10:00</strong></div>
+              <div><span class="status-dot"></span><span>Join UX study group</span><strong>14:00</strong></div>
+              <div><span class="status-dot"></span><span>Attend careers workshop</span><strong>17:30</strong></div>
+            </div>
+            <a href="#plan" data-route="plan" class="text-link">Open my plan <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </section>
+      <section class="section" aria-labelledby="quick-title">
+        <div class="container">
+          <div class="section-heading"><div><p class="eyebrow">Quick start</p><h2 id="quick-title">What do you need today?</h2></div></div>
+          <div class="quick-grid">
+            <a class="quick-card" href="#groups" data-route="groups"><span class="quick-icon" aria-hidden="true">SG</span><strong>Study with others</strong><span>Find groups by course, time and format.</span></a>
+            <a class="quick-card" href="#events" data-route="events"><span class="quick-icon" aria-hidden="true">EV</span><strong>See what is happening</strong><span>Browse workshops, socials and academic events.</span></a>
+            <a class="quick-card" href="#resources" data-route="resources"><span class="quick-icon" aria-hidden="true">RS</span><strong>Find a resource</strong><span>Search practical support without digging through menus.</span></a>
+          </div>
+        </div>
+      </section>
+      <section class="section section-muted" aria-labelledby="checkin-title">
+        <div class="container checkin">
+          <div><p class="eyebrow">A small pause</p><h2 id="checkin-title">How are you feeling about today?</h2><p>Choose an option to personalise your next step. No diagnosis or judgement - just a quick check-in.</p></div>
+          <div class="mood-row" role="group" aria-label="Choose how you feel today">
+            <button class="mood-btn" type="button" data-mood="Focused">Focused</button>
+            <button class="mood-btn" type="button" data-mood="Okay">Okay</button>
+            <button class="mood-btn" type="button" data-mood="Overwhelmed">Overwhelmed</button>
+          </div>
+          <p id="moodStatus" class="status-message" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+    </div>
+    <div class="route hidden" id="groupsRoute">
+      <section class="section page-head"><div class="container"><p class="eyebrow">Study groups</p><h1>Learn with people who get your schedule.</h1><p>Filter groups, compare session details and join with one clear action.</p></div></section>
+      <section class="section"><div class="container">
+        <div class="toolbar" aria-label="Study group filters">
+          <label>Course <select id="groupCourse"><option value="all">All courses</option><option value="Interaction Design">Interaction Design</option><option value="Software Development">Software Development</option><option value="Cyber Security">Cyber Security</option></select></label>
+          <label>Format <select id="groupFormat"><option value="all">All formats</option><option value="In person">In person</option><option value="Online">Online</option></select></label>
+          <label class="search-label">Search <input id="groupSearch" type="search" placeholder="e.g. UX, Python, databases"></label>
+        </div>
+        <div id="groupList" class="card-grid" aria-live="polite"></div>
+        <p id="groupEmpty" class="empty-state hidden">No groups match these filters. Try a wider search.</p>
+      </div></section>
+    </div>
+    <div class="route hidden" id="eventsRoute">
+      <section class="section page-head"><div class="container"><p class="eyebrow">Events</p><h1>Useful things happening around campus.</h1><p>Keep academic, social and career events in one place.</p></div></section>
+      <section class="section"><div class="container">
+        <div class="toolbar"><label>Category <select id="eventCategory"><option value="all">All categories</option><option value="Academic">Academic</option><option value="Social">Social</option><option value="Careers">Careers</option></select></label></div>
+        <div id="eventList" class="card-grid"></div>
+      </div></section>
+    </div>
+    <div class="route hidden" id="resourcesRoute">
+      <section class="section page-head"><div class="container"><p class="eyebrow">Resources</p><h1>Get to the right support without the hunt.</h1><p>Plain-language descriptions help students decide what each resource is for.</p></div></section>
+      <section class="section"><div class="container">
+        <label class="wide-search">Search resources <input id="resourceSearch" type="search" placeholder="Try: library, careers, accessibility"></label>
+        <div id="resourceList" class="card-grid"></div>
+      </div></section>
+    </div>
+    <div class="route hidden" id="planRoute">
+      <section class="section page-head"><div class="container"><p class="eyebrow">My plan</p><h1>A simple plan for the week.</h1><p>Keep a few important actions visible and easy to complete.</p></div></section>
+      <section class="section"><div class="container plan-layout">
+        <div class="panel">
+          <div class="panel-heading"><div><span class="eyebrow">Today</span><h2>Tuesday</h2></div><span class="progress-pill" id="progressPill">1 of 3 complete</span></div>
+          <div id="taskList" class="task-list"></div>
+          <form id="taskForm" class="add-task"><label for="newTask">Add a task</label><div class="inline-form"><input id="newTask" required maxlength="80" placeholder="e.g. Review lecture notes"><button class="btn btn-primary" type="submit">Add</button></div></form>
+        </div>
+        <aside class="panel tips"><h2>Small design choices</h2><ul><li>Tasks stay visible so recognition is easier than recall.</li><li>Completed tasks are clearly marked and can be undone.</li><li>Nothing disappears after one click; actions can be reversed.</li></ul></aside>
+      </div></section>
+    </div>
+  </main>
+  <dialog id="accessibilityDialog" aria-labelledby="accessibilityTitle">
+    <div class="dialog-inner">
+      <div class="dialog-header"><div><p class="eyebrow">Preferences</p><h2 id="accessibilityTitle">Accessibility settings</h2></div><button class="icon-btn" id="closeAccessibility" type="button">Close</button></div>
+      <label class="switch-row"><span>Increase text size</span><input id="largeTextToggle" type="checkbox"></label>
+      <label class="switch-row"><span>Use higher contrast</span><input id="contrastToggle" type="checkbox"></label>
+      <label class="switch-row"><span>Reduce motion</span><input id="motionToggle" type="checkbox"></label>
+      <p class="dialog-note">These settings apply while this page is open. Your choices are not sent to a server.</p>
+    </div>
+  </dialog>
+  <footer class="site-footer"><div class="container footer-inner"><span>CampusConnect prototype - UX Portfolio of Evidence</span><span>Designed with accessibility and usability in mind.</span></div></footer>
+  <script src="app.js"></script>
+</body>
+</html>
