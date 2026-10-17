@@ -78,3 +78,16 @@ RaceDay/
 │   └── README-docs.md
 └── README.md
 ```
+
+## Interaction Design POE — Part 2 (CampusConnect)
+
+Part 2 files are in [`Part_2_Submission/`](Part_2_Submission/README.md).
+
+- [Prototype source](Part_2_Submission/prototype/index.html) — open or download `index.html`, `style.css`, and `app.js` together to run the prototype locally.
+- [Part 2 report (Markdown)](Part_2_Submission/reports/Part_2_Prototype_Implementation_Report.md)
+- [Functional test results](Part_2_Submission/evidence/test_results.txt)
+- [Structured test results](Part_2_Submission/evidence/test_results.json)
+- [Submission checklist](Part_2_Submission/SUBMISSION_CHECKLIST.txt)
+
+The Word/PDF report files and original screenshot evidence remain in the downloadable Part 2 package shared in the conversation; the repository has the readable report source, prototype files and test records.
+
