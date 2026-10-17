@@ -1,0 +1,14 @@
+CAMPUSCONNECT PROTOTYPE - FUNCTIONAL SMOKE TESTS
+Environment: Playwright-controlled Chromium. Desktop viewport 1440x1000; mobile viewport 390x844.
+Scope: scripted functional verification only; not a participant usability study or formal WCAG conformance audit.
+
+T01 | PASS | Load home page | CampusConnect - Student support hub
+T02 | PASS | Filter study groups by course | 3 matching cards: UX research sprint, Accessibility critique, Portfolio build session
+T03 | PASS | Join and leave a study group | UX research sprint; reversible state verified
+T04 | PASS | Filter events and RSVP/cancel | 2 careers events; RSVP reversible
+T05 | PASS | Search resources by keyword | Careers and employability
+T06 | PASS | Complete, add and delete tasks | Progress after completion: 2 of 3 complete; add/delete verified
+T07 | PASS | Accessibility settings dialog and preferences | Dialog opens/closes; text, contrast and motion classes toggle
+T08 | PASS | Emotional check-in and keyboard skip link | Mood response set; first Tab focuses and reveals skip link
+T09 | PASS | Mobile menu, route navigation and horizontal reflow | Menu opened; Events visible; no horizontal overflow
+T10 | PASS | No uncaught JavaScript errors | No page errors detected during scripted checks
