@@ -1,0 +1,67 @@
+{
+  "environment": "Playwright-controlled Chromium, desktop viewport 1440x1000; mobile viewport 390x844",
+  "note": "Functional smoke tests performed by scripted interaction; this is not a participant usability study or formal WCAG conformance audit.",
+  "results": [
+    {
+      "id": "T01",
+      "test": "Load home page",
+      "result": "PASS",
+      "details": "CampusConnect - Student support hub"
+    },
+    {
+      "id": "T02",
+      "test": "Filter study groups by course",
+      "result": "PASS",
+      "details": "3 matching cards: UX research sprint, Accessibility critique, Portfolio build session"
+    },
+    {
+      "id": "T03",
+      "test": "Join and leave a study group",
+      "result": "PASS",
+      "details": "Reversible join/leave state verified"
+    },
+    {
+      "id": "T04",
+      "test": "Filter events and RSVP/cancel",
+      "result": "PASS",
+      "details": "2 careers events; RSVP reversible"
+    },
+    {
+      "id": "T05",
+      "test": "Search resources by keyword",
+      "result": "PASS",
+      "details": "Careers and employability"
+    },
+    {
+      "id": "T06",
+      "test": "Complete, add and delete tasks",
+      "result": "PASS",
+      "details": "2 of 3 complete after completion; add/delete verified"
+    },
+    {
+      "id": "T07",
+      "test": "Accessibility settings dialog and preferences",
+      "result": "PASS",
+      "details": "Dialog opens/closes; text, contrast and motion classes toggle"
+    },
+    {
+      "id": "T08",
+      "test": "Emotional check-in and keyboard skip link",
+      "result": "PASS",
+      "details": "Mood response set; first Tab focuses and reveals skip link"
+    },
+    {
+      "id": "T09",
+      "test": "Mobile menu, route navigation and horizontal reflow",
+      "result": "PASS",
+      "details": "Menu opens, Events visible, no horizontal overflow at 390px"
+    },
+    {
+      "id": "T10",
+      "test": "No uncaught JavaScript errors",
+      "result": "PASS",
+      "details": "No page errors detected during scripted checks"
+    }
+  ],
+  "page_errors": []
+}
