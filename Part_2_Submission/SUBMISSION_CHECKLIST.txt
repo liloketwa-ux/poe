@@ -1,0 +1,8 @@
+PART 2 SUBMISSION CHECKLIST
+
+[ ] Replace the first name, surname, student number and module code placeholders in the report cover page.
+[ ] If lecturer or peer feedback on Part 1 was provided, add the genuine feedback and explain the resulting change. Do not invent feedback.
+[ ] Open Part_2_Submission/prototype/index.html in a browser and confirm that it works on your own computer.
+[ ] Review the report and ensure the final format matches your lecturer's submission instructions.
+[ ] Ensure the reference list and in-text citations are included.
+[ ] If your submission requires screenshots and Word/PDF report files inside GitHub, add those files from the downloaded submission package as binary attachments.
