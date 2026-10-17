@@ -37,7 +37,6 @@ Part 1 requirements emphasised direct navigation, low cognitive load, clear feed
 The materials available for preparing this report did not include specific lecturer or peer comments from Part 1. To avoid inventing feedback, the changes below are described as self-review refinements against the design requirements, not as external reviewer comments. Add any authentic feedback separately received and explain the corresponding response before submission if required.
 
 | Review point | Design need | Part 2 refinement |
-|---|---|---|
 | Navigation and orientation | Main student tasks should be easy to find. | Added top-level Home, Study groups, Events, Resources and My plan routes, plus shortcut cards on the home page. |
 | Visible interaction feedback | Users should understand whether an action worked. | Join and RSVP labels change after activation; task progress updates. |
 | User control | Users should be able to reverse low-risk actions. | Joining/leaving and RSVP/cancellation are reversible; tasks can be unchecked or deleted. |
@@ -56,7 +55,6 @@ CampusConnect is a single-page web prototype with hash-based navigation. Its vis
 ### 3.1 Implemented features
 
 | Feature | Implementation | Observed behaviour |
-|---|---|---|
 | Home and navigation | Quick links, weekly example and emotional check-in. | Routes open from the header and home-page shortcuts. |
 | Study groups | Course, format and keyword filters; group cards; Join group action. | Filters update visible cards; joining and leaving are reversible in the current session. |
 | Events | Category filter and event cards with time, location and descriptions. | RSVP is confirmed visibly and can be cancelled. |
@@ -75,7 +73,6 @@ Interaction state is held in JavaScript for the current open page and resets on 
 Interaction design should make an action, its result and the next available step understandable. Human-centred design recommends considering users, tasks and context throughout development (ISO, 2019). CampusConnect applies this through direct labels, immediate feedback, scannable cards and reversible actions.
 
 | Principle | Prototype example | Usability benefit |
-|---|---|---|
 | Visibility of system status | Join/RSVP labels change; task count and check-in status update. | Users see the result of an action without a page reload. |
 | User control and freedom | Join/leave, RSVP/cancel, task undo and deletion. | Users can reverse common low-risk choices. |
 | Recognition rather than recall | Cards show category, schedule, format, location or description. | Users can compare choices without remembering details across routes. |
@@ -88,7 +85,6 @@ Interaction design should make an action, its result and the next available step
 WCAG 2.2 organises accessibility guidance around perceivable, operable, understandable and robust content (W3C, 2024). The prototype implements selected observable practices; these are design intentions and preliminary checks, not a claim of full WCAG 2.2 Level AA conformance.
 
 | Accessibility area | Implementation and current evidence |
-|---|---|
 | Keyboard access | Skip link, native links and buttons, and visible focus indicators. The skip link is reachable with the first Tab on initial load. |
 | Labels and semantics | Landmarks, headings, labelled selection/search fields and a labelled task input. |
 | Dynamic feedback | The emotional check-in uses a status region; Join and RSVP controls update their text to reflect state. |
@@ -99,7 +95,7 @@ Further accessibility work should include keyboard-only and assistive-technology
 
 ## 5. Prototype evidence
 
-The original submission package contains screenshots of the home page, study groups, My Plan, accessibility settings, mobile home and mobile events views. They document the visual implementation and the test viewport. The home page introduces the service in plain language and offers primary routes. Study-group filters appear before the comparable cards, and joined-state text gives action feedback without relying on colour alone. My Plan shows task completion controls and progress. The mobile view demonstrates a single-column reflow at 390 × 844 pixels.
+The complete Word/PDF report bundle contains screenshots of the home page, study groups, My Plan, accessibility settings, mobile home and mobile events views. The Markdown copy in this repository preserves the captions and narrative, while the visual evidence images are included in the downloadable submission package. The home page introduces the service in plain language and offers primary routes. Study-group filters appear before the comparable cards, and joined-state text gives action feedback without relying on colour alone. My Plan shows task completion controls and progress. The mobile view demonstrates a single-column reflow at 390 × 844 pixels.
 
 Visual consistency in spacing, borders, typography and button placement supports the consistency and minimalist-design heuristics discussed by Nielsen (2024) and Krug (2014). Screenshots show specific views, not complete compatibility across every device, browser or zoom setting.
 
@@ -108,7 +104,6 @@ Visual consistency in spacing, borders, typography and button placement supports
 A scripted functional smoke-test pass was recorded using Playwright-controlled Chromium on 16 October 2026. Desktop checks used a 1440 × 1000 viewport; mobile checks used a 390 × 844 viewport. Tests exercised key controls and inspected visible outcomes.
 
 | ID | Test action | Expected/observed outcome | Result |
-|---|---|---|---|
 | T01 | Open Home. | Correct title and home content are visible. | PASS |
 | T02 | Filter study groups by Interaction Design. | Matching course groups remain visible. | PASS |
 | T03 | Join a group, then leave it. | The action label changes and returns to its original state. | PASS |
