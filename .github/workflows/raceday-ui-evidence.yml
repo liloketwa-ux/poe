@@ -2,6 +2,11 @@ name: RaceDay live UI evidence
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/capture_raceday_ui.py'
+      - '.github/workflows/raceday-ui-evidence.yml'
 
 permissions:
   contents: write
@@ -81,7 +86,11 @@ jobs:
       - name: Show container logs if evidence capture fails
         if: failure()
         run: docker compose -f Part_3_Submission/docker-compose.yml logs --no-color
+        env:
+          SA_PASSWORD: LocalRaceDayC1!StrongPassword
 
       - name: Stop the temporary application stack
         if: always()
         run: docker compose -f Part_3_Submission/docker-compose.yml down -v
+        env:
+          SA_PASSWORD: LocalRaceDayC1!StrongPassword
