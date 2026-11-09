@@ -1,0 +1,1 @@
+The xUnit test project uses WebApplicationFactory with a per-test in-memory SQLite database. Tests exercise real HTTP routes and cookie authentication. Azure upload is tested in the no-credentials mode, which must return 503 instead of claiming the image was stored. A successful upload requires a real Azure Storage account and should be demonstrated with configured credentials.
