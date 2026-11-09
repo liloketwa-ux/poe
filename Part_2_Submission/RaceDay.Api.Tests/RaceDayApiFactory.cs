@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using RaceDay.Api.Data;
+using RaceDay.Api.Services;
 
 namespace RaceDay.Api.Tests;
 
@@ -22,6 +23,8 @@ public sealed class RaceDayApiFactory : WebApplicationFactory<Program>
             var options = new DbContextOptionsBuilder<RaceDayDbContext>().UseSqlite(_connection).Options;
             services.AddSingleton(options);
             services.AddScoped(provider => new RaceDayDbContext(provider.GetRequiredService<DbContextOptions<RaceDayDbContext>>()));
+            services.RemoveAll<IFileStorageService>();
+            services.AddSingleton<IFileStorageService, FakeFileStorageService>();
         });
     }
     public async Task InitialiseAsync()
