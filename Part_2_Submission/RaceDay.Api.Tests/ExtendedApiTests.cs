@@ -26,7 +26,7 @@ public sealed class ExtendedApiTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task AzureUploadDoesNotPretendToSucceedWithoutCredentials()
+    public async Task EventBannerUploadUsesStorageServiceAndPersistsImageUrl()
     {
         await RegisterAndLogin("Organiser", "blob-owner@example.com");
         var eventResponse = await _client.PostAsJsonAsync("/api/events", ValidEvent());
@@ -37,7 +37,20 @@ public sealed class ExtendedApiTests : IAsyncLifetime
         image.Headers.ContentType = new MediaTypeHeaderValue("image/png");
         form.Add(image, "file", "banner.png");
         var response = await _client.PostAsync($"/api/events/{ev!.EventId}/banner", form);
-        Assert.Equal(HttpStatusCode.ServiceUnavailable, response.StatusCode);
+        Assert.True(response.StatusCode == HttpStatusCode.OK, await response.Content.ReadAsStringAsync());
+        var detail = await _client.GetFromJsonAsync<System.Text.Json.JsonElement>($"/api/events/{ev.EventId}");
+        Assert.Equal("https://storage.test/event-banners/test-banner.png", detail.GetProperty("bannerImageUrl").GetString());
+    }
+
+    [Fact]
+    public async Task AzureBlobServiceRejectsUploadsWithoutConnectionString()
+    {
+        var configuration = new Microsoft.Extensions.Configuration.ConfigurationBuilder().Build();
+        var storage = new RaceDay.Api.Services.AzureBlobFileStorageService(configuration);
+        using var stream = new MemoryStream([1,2,3]);
+        var file = new FormFile(stream, 0, 3, "file", "image.png")
+        { Headers = new HeaderDictionary(), ContentType = "image/png" };
+        await Assert.ThrowsAsync<InvalidOperationException>(() => storage.UploadImageAsync("event-banners", file, CancellationToken.None));
     }
 
     [Fact]
