@@ -63,8 +63,9 @@ Event banner and profile-picture uploads are implemented in the API. The storage
 
 The workflow `.github/workflows/raceday-ci.yml` uses .NET 8. The verified [RaceDay .NET 8 CI run #42637090817](https://github.com/liloketwa-ux/poe/actions/runs/42637090817) completed successfully: solution build passed, 12 integration tests passed (0 failed, 0 skipped), Docker Compose validated, and API/MVC Docker images built. See the [workflow history](https://github.com/liloketwa-ux/poe/actions/workflows/raceday-ci.yml).
 
-The generated SVG evidence summary is based on workflow metadata; it is not a browser screenshot of GitHub Actions. Capture a genuine screenshot of the successful run if the rubric requires one.
+## Video presentations
 
-Unlisted YouTube demonstration: [https://youtu.be/ODFcxN-v5O8](https://youtu.be/ODFcxN-v5O8)
+- **Interface demonstration — running RaceDay application:** [Watch the interface demonstration](https://youtu.be/ODFcxN-v5O8)
+- **Code walkthrough — API structure, controllers, database logic, authentication, validation, Blob Storage service and tests:** [Watch the coding walkthrough](https://youtu.be/InnJ0NeXg9w)
 
 Review [the Part 2 commit plan](COMMIT_PLAN.md). A commit plan is not itself proof that each development task was completed; use the commit history and ensure the implementation is work you can explain.
