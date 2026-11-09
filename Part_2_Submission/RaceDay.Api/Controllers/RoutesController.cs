@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RaceDay.Api.Data;
 using RaceDay.Api.DTOs;
 using RaceDay.Api.Models;
+using RaceDayRoute = RaceDay.Api.Models.Route;
 
 namespace RaceDay.Api.Controllers;
 
@@ -27,11 +28,11 @@ public sealed class RoutesController(RaceDayDbContext db) : ApiControllerBase(db
         if (!await OwnsEventAsync(eventId, token)) return Forbid();
         if (request.ElevationGainM is < 0) return BadRequest(new { message = "Elevation gain cannot be negative." });
         var item = await Db.Routes.FirstOrDefaultAsync(x => x.EventId == eventId, token);
-        if (item is null) { item = new Route { EventId = eventId }; Db.Routes.Add(item); }
+        if (item is null) { item = new RaceDayRoute { EventId = eventId }; Db.Routes.Add(item); }
         item.StartLocation = request.StartLocation.Trim(); item.FinishLocation = request.FinishLocation.Trim();
         item.RouteUrl = request.RouteUrl; item.ElevationGainM = request.ElevationGainM; item.Notes = request.Notes;
         await Db.SaveChangesAsync(token); return Ok(ToResponse(item));
     }
-    private static RouteResponse ToResponse(Route x) => new(x.RouteId, x.EventId, x.StartLocation,
+    private static RouteResponse ToResponse(RaceDayRoute x) => new(x.RouteId, x.EventId, x.StartLocation,
         x.FinishLocation, x.RouteUrl, x.ElevationGainM, x.Notes);
 }
