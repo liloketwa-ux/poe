@@ -24,6 +24,17 @@ dotnet run --project Part_3_Submission/RaceDay.Mvc/RaceDay.Mvc.csproj
 
 Set `Api__BaseUrl` to the API URL if necessary. Browse the local URL printed by dotnet.
 
+## Demo accounts for the Docker demonstration
+
+When the Docker Compose configuration is used, it creates two local demonstration accounts and sample events/categories/routes/enrolment/results. This seed is only enabled by `Database__SeedDemoData=true` in the Compose file.
+
+| Role | Email | Password |
+|---|---|---|
+| Organiser | `organiser@raceday.demo` | `RaceDayDemo!2026` |
+| Participant | `participant@raceday.demo` | `RaceDayDemo!2026` |
+
+These are demonstration credentials, not production accounts. Do not deploy the seeded environment as a production system.
+
 ## Docker Compose
 
 From this directory, set a strong local SQL Server password and (optionally) an Azure Storage connection string:
