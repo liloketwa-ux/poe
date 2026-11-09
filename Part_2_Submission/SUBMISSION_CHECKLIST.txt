@@ -14,9 +14,9 @@
 - [x] Swagger integration in source
 - [x] xUnit integration test project included
 - [x] GitHub Actions workflow includes API build/test
-- [ ] Green GitHub Actions run verified after pushing this branch
+- [x] Green GitHub Actions run verified: 11 tests passed, API/MVC build and both Docker image builds passed
 - [ ] Add genuine successful-build screenshot
-- [ ] Verify at least 20 meaningful Part 2 commits
+- [x] At least 20 Part 2 API/test implementation commits present
 
 ## Part 3 — MVC
 - [x] ASP.NET Core MVC application source and views
@@ -28,11 +28,11 @@
 - [x] CI workflow builds MVC project
 - [ ] Run application locally or in Docker and verify all user journeys
 - [ ] Configure real Azure Storage account and perform upload test
-- [ ] Verify at least 20 meaningful Part 3 commits
+- [x] At least 20 Part 3 MVC implementation commits present
 
 ## Portfolio of Evidence and ARC submission
 - [ ] Add actual screenshots captured from the running application
-- [ ] Add actual screenshot from successful GitHub Actions workflow
+- [x] Generated CI evidence summary linked to actual successful workflow (not a GitHub UI screenshot)
 - [ ] Record and upload unlisted YouTube demonstration
 - [ ] Replace YouTube placeholder in README files
 - [ ] Finalise Word/PDF Portfolio of Evidence with actual student details and evidence
