@@ -8,50 +8,73 @@ RaceDay is a South African road-running, walking and cycling event platform. Org
 
 | Part | Location | Deliverables |
 |---|---|---|
-| Part 1 — Planning/database | `docs/` | ERD, endpoint plan, SQL Server schema |
-| Part 2 — REST API | `Part_2_Submission/` | ASP.NET Core API, EF Core, cookie/session authentication, role access, Swagger, tests |
-| Part 3 — MVC | `Part_3_Submission/` | MVC front end, API client, role-specific UI, Azure upload forwarding, Docker |
-| CI/CD | `.github/workflows/raceday-ci.yml` | Builds all projects and runs API integration tests |
-
-The previous CampusConnect HTML/JavaScript prototype was not the required application and has been removed from the corrected Part 2 submission.
+| Part 1 — Planning/database | `docs/` | ERD, endpoint plan and SQL Server schema |
+| Part 2 — REST API | `Part_2_Submission/` | C# API, EF Core, authentication, role access, Swagger and tests |
+| Part 3 — MVC | `Part_3_Submission/` | MVC front end, API client, role-specific UI, image-upload forwarding and Docker |
+| CI/CD | `.github/workflows/raceday-ci.yml` | Builds API/MVC, runs API tests and builds both Docker images |
 
 ## Part 1
 
-The Part 1 RaceDay planning artefacts remain in `docs/`: ERD, API endpoint plan and SQL Server schema.
+The Part 1 planning and database artefacts are in `docs/`: ERD, API endpoint plan, SQL Server schema and the Part 3 image-column extension script.
 
 ## Part 2 — RESTful API development
 
-The API is written in C# and uses EF Core Code-First with SQL Server. It provides Organiser and Participant roles, Identity password hashing, an HTTP-only authentication cookie and session state, role-protected endpoints and Swagger documentation.
+The C# API uses EF Core Code-First with SQL Server. It provides Organiser and Participant roles, ASP.NET Core Identity password hashing, an HTTP-only authentication cookie, session state, role-protected endpoints and Swagger documentation.
 
 See [Part 2 README](Part_2_Submission/README.md).
 
 ## Part 3 — MVC application
 
-The MVC application consumes Part 2 through a typed server-side HTTP client. It has no direct database access. It provides public event discovery, Organiser and Participant dashboards, event and category management, enrolments, results and profile pages. Event banners and profile photos are sent through the API to Azure Blob Storage.
+The MVC application consumes Part 2 through a server-side typed HTTP client. It has no Entity Framework reference or database connection. It provides public event discovery, role-specific dashboards, event and category workflows, enrolments, results and profile pages. Event banners and profile pictures are forwarded through the API to Azure Blob Storage.
 
 See [Part 3 README](Part_3_Submission/README.md).
 
 ## Build and test
 
-Requires the .NET 10 SDK. From the repository root:
+The solution projects target **.NET 8.0**. From the repository root:
 
 ```powershell
+dotnet --list-sdks
 dotnet restore RaceDay.sln
 dotnet build RaceDay.sln --configuration Release
 dotnet test Part_2_Submission/RaceDay.Api.Tests/RaceDay.Api.Tests.csproj --configuration Release
 ```
 
-The same build and test steps run in GitHub Actions for pushes to `main` and `raceday-*` branches and for pull requests to `main`.
+## Run locally without Docker
+
+A local SQL Server instance is required. The API's default development connection string uses SQL Server LocalDB. Start the API in one PowerShell window, from the repository root:
+
+```powershell
+$env:Database__EnsureCreated = "true"
+$env:Database__SeedDemoData = "true"
+dotnet run --no-launch-profile --project .\Part_2_Submission\RaceDay.Api\RaceDay.Api.csproj --urls http://localhost:5100
+```
+
+In a second PowerShell window:
+
+```powershell
+dotnet run --no-launch-profile --project .\Part_3_Submission\RaceDay.Mvc\RaceDay.Mvc.csproj --urls http://localhost:5101
+```
+
+Open the MVC site at [http://localhost:5101](http://localhost:5101) and Swagger at [http://localhost:5100/swagger](http://localhost:5100/swagger). Demo accounts are listed in the Part 3 README. For the first run, use a clean LocalDB database. EF Core `EnsureCreated` does not update an existing database schema.
 
 ## Docker
 
-From `Part_3_Submission/`, set `SA_PASSWORD` and run `docker compose up --build`. See the Part 3 README for the full instructions and optional Azure configuration.
+From the repository root:
 
-## Verified CI/CD
+```powershell
+$env:SA_PASSWORD = "Replace-With-A-Strong-Local-Password!"
+docker compose -f .\Part_3_Submission\docker-compose.yml up --build
+```
 
-![RaceDay .NET CI successful verification summary](docs/ci-cd-green-build.svg)
+See the Part 3 README for optional Azure configuration and stop instructions.
 
-The linked GitHub Actions run completed successfully on 9 November 2026: solution restore/build, 11 API integration tests, Docker Compose validation, API image build and MVC image build all passed. [Open the full run on GitHub](https://github.com/liloketwa-ux/poe/actions/runs/42600468489). The SVG is a generated evidence summary from the run metadata, not a screenshot of the GitHub website.
-- The POE includes UI design previews with sample data. Replace/add genuine screenshots after running the MVC application locally or in Docker.
-- Replace the YouTube placeholders in Part 2 and Part 3 READMEs with your unlisted demonstration link.
-- The assignment requires at least 20 meaningful commits for each of Parts 2 and 3. Review the actual history and ensure each commit represents work you completed and understand.
+## CI/CD and evidence
+
+The GitHub Actions workflow restores and builds the solution, runs API integration tests, validates Docker Compose and builds the API/MVC images. See the [RaceDay .NET CI workflow](https://github.com/liloketwa-ux/poe/actions/workflows/raceday-ci.yml).
+
+The generated SVG evidence summary is based on workflow metadata, not a screenshot of the GitHub Actions page. Capture a genuine screenshot of the successful run and screenshots of the actual running MVC application where required by the rubric.
+
+## Demonstration video
+
+[Unlisted YouTube demonstration](https://youtu.be/ODFcxN-v5O8)

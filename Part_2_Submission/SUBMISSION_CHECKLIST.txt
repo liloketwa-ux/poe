@@ -1,9 +1,10 @@
 # RaceDay assessment completion checklist
 
 ## Part 1 — Planning/database
-- [ ] ERD included and readable
-- [ ] API endpoint plan included
-- [ ] SQL Server script included
+- [ ] ERD included and readable in the final portfolio
+- [x] API endpoint plan included
+- [x] SQL Server script included
+- [x] SQL and EF category age constraints allow optional minimum/maximum age bounds used by sample data
 
 ## Part 2 — REST API
 - [x] ASP.NET Core Web API in C#
@@ -11,31 +12,31 @@
 - [x] Organiser and Participant role restrictions
 - [x] Password hashing and HTTP-only authentication session cookie
 - [x] Event, category, enrolment, result, route, profile and weather endpoints
-- [x] Swagger integration in source
-- [x] xUnit integration test project included
+- [x] Swagger integration and endpoint documentation in source
+- [x] xUnit HTTP integration test project included
 - [x] GitHub Actions workflow includes API build/test
-- [x] Green GitHub Actions run verified: 11 tests passed, API/MVC build and both Docker image builds passed
-- [ ] Add genuine successful-build screenshot
-- [x] At least 20 Part 2 API/test implementation commits present
+- [ ] Verify the new .NET 8 workflow after the latest source changes
+- [ ] Capture a genuine successful-build screenshot from GitHub Actions
+- [x] More than 20 distinct Part 2 API/test implementation commits appear in repository history
 
 ## Part 3 — MVC
 - [x] ASP.NET Core MVC application source and views
 - [x] MVC consumes API via server-side HTTP client; no database connection
 - [x] Organiser and Participant screens
-- [x] Image uploads go through API
+- [x] Event banner and profile image upload forwarding through API
 - [x] API Azure Blob Storage integration source
 - [x] MVC Dockerfile and Compose orchestration
-- [x] CI workflow builds MVC project
-- [ ] Run application locally or in Docker and verify all user journeys
-- [ ] Configure real Azure Storage account and perform upload test
-- [x] At least 20 Part 3 MVC implementation commits present
+- [x] CI workflow builds MVC project and Docker image
+- [ ] Run locally or in Docker and manually verify all user journeys
+- [ ] Configure real Azure Storage and perform a live upload test
+- [x] More than 20 distinct Part 3 MVC implementation commits appear in repository history
 
 ## Portfolio of Evidence and ARC submission
-- [ ] Add actual screenshots captured from the running application
-- [x] Generated CI evidence summary linked to actual successful workflow (not a GitHub UI screenshot)
-- [ ] Record and upload unlisted YouTube demonstration
-- [ ] Replace YouTube placeholder in README files
-- [ ] Finalise Word/PDF Portfolio of Evidence with actual student details and evidence
-- [ ] Submit the correct GitHub branch/repository link on ARC
+- [ ] Add genuine screenshots captured from the running application
+- [x] Generated CI evidence summary linked to a real successful workflow (not a GitHub UI screenshot)
+- [x] YouTube video link added to root, Part 2 and Part 3 README files
+- [ ] Confirm the recording is unlisted and contains the actual demonstrated application
+- [ ] Finalise Word/PDF Portfolio of Evidence with actual student details and genuine evidence
+- [ ] Submit the correct GitHub repository/branch link on ARC
 
-Checked boxes indicate source code or configuration has been added. They do not imply runtime verification where not stated.
+Checked items indicate source/configuration or repository history is present. They do not imply local runtime verification or a live Azure upload where those items remain unchecked.

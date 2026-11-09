@@ -1,6 +1,6 @@
 # RaceDay — Part 2: RESTful API Development
 
-This is the corrected Part 2 implementation: an **ASP.NET Core Web API written in C#**, using Entity Framework Core Code-First and SQL Server. This replaces the previously submitted CampusConnect HTML/JavaScript project.
+This is the Part 2 implementation: an **ASP.NET Core Web API written in C#**, using Entity Framework Core Code-First and SQL Server.
 
 ## Projects
 
@@ -11,9 +11,9 @@ This is the corrected Part 2 implementation: an **ASP.NET Core Web API written i
 
 **Organiser:** creates and maintains owned events and categories, views enrolments for owned events, and captures or corrects event results.
 
-**Participant:** browses events and categories, enrols in a category, cancels eligible own enrolments, updates own profile, and views own results.
+**Participant:** browses events and categories, enrols in a category, cancels eligible own enrolments, updates own profile and views own results.
 
-Public registration accepts either `Organiser` or `Participant`. Passwords are stored as ASP.NET Core Identity password hashes. Login issues an HTTP-only authentication cookie that carries the authenticated identity and role; session state also records user ID and role. Logout clears both. Organiser operations are scoped to events owned by that organiser.
+Public registration accepts either `Organiser` or `Participant`. Passwords are stored as ASP.NET Core Identity password hashes. Login issues an HTTP-only authentication cookie containing the authenticated identity and role; session state also records the user ID and role. Logout clears both. Organiser operations are scoped to events owned by that organiser.
 
 ## Implemented API areas
 
@@ -29,40 +29,42 @@ Public registration accepts either `Organiser` or `Participant`. Passwords are s
 | Route and weather | `GET/PUT /api/events/{id}/route`, `GET /api/events/{id}/weather` | Public read; Organiser write |
 | Image upload | `POST /api/events/{id}/banner`, `POST /api/profile/me/picture` | Organiser owner / Authenticated user |
 
-Swagger is available at `/swagger`. Request/response DTOs and endpoint summaries are included in the API project.
+Swagger is available at `/swagger`. XML operation summaries and response metadata are included in the API controllers.
 
 ## Database
 
-The EF Core model contains Users, Events, Routes, Categories, Enrolments and Results, with foreign keys, indexes, unique constraints and check constraints aligned to the Part 1 schema.
+The EF Core Code-First model contains Users, Events, Routes, Categories, Enrolments and Results, with foreign keys, indexes, unique constraints and check constraints aligned with the Part 1 SQL schema. The Part 3 image columns are added by `docs/RaceDay-Part3-ImageColumns.sql` when using the Part 1 SQL script.
 
-Set `ConnectionStrings__RaceDayDb` for the target SQL Server. Create the database with EF tooling:
-
-```powershell
-dotnet tool install --global dotnet-ef --version 10.0.0
-dotnet ef migrations add InitialCreate --project Part_2_Submission/RaceDay.Api/RaceDay.Api.csproj --startup-project Part_2_Submission/RaceDay.Api/RaceDay.Api.csproj
-dotnet ef database update --project Part_2_Submission/RaceDay.Api/RaceDay.Api.csproj --startup-project Part_2_Submission/RaceDay.Api/RaceDay.Api.csproj
-```
-
-Run the API:
+The default development connection string uses `(localdb)\\MSSQLLocalDB`. To create a clean local development database and insert demonstration records, run from the repository root:
 
 ```powershell
-dotnet run --project Part_2_Submission/RaceDay.Api/RaceDay.Api.csproj
+$env:Database__EnsureCreated = "true"
+$env:Database__SeedDemoData = "true"
+dotnet run --no-launch-profile --project .\Part_2_Submission\RaceDay.Api\RaceDay.Api.csproj --urls http://localhost:5100
 ```
+
+`EnsureCreated` creates a new database schema; it does not apply migrations or update a pre-existing database. If you already created the database using the Part 1 SQL script, apply `docs/RaceDay-Part3-ImageColumns.sql` after the Part 1 SQL script.
 
 ## Tests
+
+Run:
 
 ```powershell
 dotnet test Part_2_Submission/RaceDay.Api.Tests/RaceDay.Api.Tests.csproj --configuration Release
 ```
 
-Eleven xUnit integration tests passed in GitHub Actions (0 failed, 0 skipped) on 9 November 2026. Coverage includes registration validation, duplicate accounts, password hashing, login/session persistence, anonymous access, role rejection, organiser event ownership, participant enrolment persistence, Swagger availability, profile updates, event banner upload through a test storage adapter, Azure's missing-credential guard, and organiser result capture / participant finish-history retrieval.
+The xUnit suite uses HTTP integration tests and an isolated SQLite database. It covers registration validation, duplicate accounts, password hashing, login/session persistence, anonymous and wrong-role access, organiser event ownership, participant enrolment, result publishing/history, Swagger availability, profile updates, fake-storage upload persistence, missing Azure credentials and demo-data seeding. The demo-seed regression test checks that the sample enrolment references the generated category identity.
 
-The Azure upload code can be exercised end to end only with a real Azure Blob Storage account and `AzureBlobStorage__ConnectionString`. Without credentials, upload endpoints intentionally return HTTP 503.
+## Azure Blob Storage
+
+Event banner and profile-picture uploads are implemented in the API. The storage service requires a real connection string in `AzureBlobStorage__ConnectionString`. Without credentials, upload endpoints intentionally return HTTP 503. Automated tests use a fake storage adapter and separately test the missing-credential guard; these tests do **not** prove that an upload to a real Azure account succeeded.
 
 ## CI/CD and submission evidence
 
-`.github/workflows/raceday-ci.yml` restores and builds the solution, runs the API integration tests and uploads the TRX test result. The verified run is [RaceDay .NET CI #42600468489](https://github.com/liloketwa-ux/poe/actions/runs/42600468489). The repository contains a generated evidence summary at `docs/ci-cd-green-build.svg`; it is based on the actual run metadata and is not a browser screenshot of the GitHub page.
+The workflow `.github/workflows/raceday-ci.yml` restores and builds the solution, runs API integration tests, validates Docker Compose and builds both Docker images. See the [RaceDay .NET CI workflow](https://github.com/liloketwa-ux/poe/actions/workflows/raceday-ci.yml).
 
-Unlisted YouTube demonstration: `PASTE-UNLISTED-YOUTUBE-LINK-HERE`.
+The generated SVG evidence summary is based on workflow metadata; it is not a browser screenshot of GitHub Actions. Capture a genuine screenshot of the successful run if the rubric requires one.
 
-Review [the Part 2 commit plan](COMMIT_PLAN.md). The rubric requires 20 meaningful commits made by the student. The GitHub history must reflect genuine implementation and testing work; a commit plan is not itself proof of completion.
+Unlisted YouTube demonstration: [https://youtu.be/ODFcxN-v5O8](https://youtu.be/ODFcxN-v5O8)
+
+Review [the Part 2 commit plan](COMMIT_PLAN.md). A commit plan is not itself proof that each development task was completed; use the commit history and ensure the implementation is work you can explain.

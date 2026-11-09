@@ -4,54 +4,67 @@ The RaceDay ASP.NET Core MVC front end consumes the Part 2 API using the server-
 
 ## Features
 
-- Register/login/logout as Organiser or Participant.
+- Register, login and logout as Organiser or Participant.
 - Session-aware navigation and protected role-specific actions.
 - Public event catalogue with type and province filters, event details and categories.
 - Organiser dashboard, event create/edit/delete, category creation, enrolment list and result capture.
 - Participant dashboard, personal enrolments and results, profile edit and profile photo.
-- Event banner and profile images are uploaded by MVC to the API. Only the API connects to Azure Blob Storage.
-- Responsive Bootstrap UI with RaceDay dark-green, orange and neutral palette.
+- Event banner and profile images are forwarded by MVC to the API. Only the API connects to Azure Blob Storage.
+- Responsive Bootstrap UI with RaceDay dark-green, orange and neutral styling.
 
-## Run locally
+## Run locally without Docker
 
-1. Start SQL Server and configure `ConnectionStrings__RaceDayDb` for the API.
-2. Start the API as documented in [Part 2](../Part_2_Submission/README.md), then confirm Swagger at `http://localhost:5100/swagger`.
-3. Run the MVC project:
+1. Use the .NET 8 SDK and make sure SQL Server LocalDB is installed and running.
+2. Start the API using the instructions in [Part 2](../Part_2_Submission/README.md). Confirm Swagger at [http://localhost:5100/swagger](http://localhost:5100/swagger).
+3. In a second PowerShell window from the repository root, run:
 
 ```powershell
-dotnet run --project Part_3_Submission/RaceDay.Mvc/RaceDay.Mvc.csproj
+dotnet run --no-launch-profile --project .\Part_3_Submission\RaceDay.Mvc\RaceDay.Mvc.csproj --urls http://localhost:5101
 ```
 
-Set `Api__BaseUrl` to the API URL if necessary. Browse the local URL printed by dotnet.
+Open [http://localhost:5101](http://localhost:5101). The API base URL defaults to `http://localhost:5100/`; set `Api__BaseUrl` only when the API uses a different address.
 
-## Demo accounts for the Docker demonstration
+## Demo accounts
 
-When the Docker Compose configuration is used, it creates two local demonstration accounts and sample events/categories/routes/enrolment/results. This seed is only enabled by `Database__SeedDemoData=true` in the Compose file.
+The demo seed creates these local accounts when `Database__SeedDemoData=true` is enabled on a clean database:
 
 | Role | Email | Password |
 |---|---|---|
 | Organiser | `organiser@raceday.demo` | `RaceDayDemo!2026` |
 | Participant | `participant@raceday.demo` | `RaceDayDemo!2026` |
 
-These are demonstration credentials, not production accounts. Do not deploy the seeded environment as a production system.
+These accounts are for local demonstration only, not production deployment.
 
 ## Docker Compose
 
-From this directory, set a strong local SQL Server password and (optionally) an Azure Storage connection string:
+From the repository root, set a strong local SQL Server password and start all services:
 
 ```powershell
 $env:SA_PASSWORD = "Replace-With-A-Strong-Local-Password!"
-$env:AZURE_BLOB_CONNECTION_STRING = "your-storage-connection-string"
-docker compose up --build
+docker compose -f .\Part_3_Submission\docker-compose.yml up --build
 ```
 
-Open MVC at http://localhost:5101 and Swagger at http://localhost:5100/swagger. SQL Server data is stored in a named Docker volume. Azure upload requires a real connection string; without it, upload endpoints report a service-unavailable response.
+Optional Azure configuration:
 
-## Evidence to add after your own run
+```powershell
+$env:AZURE_BLOB_CONNECTION_STRING = "your-storage-connection-string"
+```
 
-- UI design previews are in the accompanying POE evidence pack. Capture your actual running application before submitting.
-- Screenshot of event details, categories, enrolments and result entry.
-- CI verification summary: `../docs/ci-cd-green-build.svg`; successful workflow: [RaceDay .NET CI #42600468489](https://github.com/liloketwa-ux/poe/actions/runs/42600468489).
-- Unlisted YouTube video link: `PASTE-UNLISTED-YOUTUBE-LINK-HERE`.
+Open MVC at [http://localhost:5101](http://localhost:5101) and Swagger at [http://localhost:5100/swagger](http://localhost:5100/swagger). SQL Server data is stored in a named Docker volume. Without a real Azure connection string, upload endpoints return HTTP 503 by design.
 
-Do not insert mock CI evidence. Demonstrate the Azure upload with a configured storage account during the recording if that integration is being assessed.
+Stop the services with `Ctrl+C`, then run:
+
+```powershell
+docker compose -f .\Part_3_Submission\docker-compose.yml down
+```
+
+Do not add `-v` unless you intend to delete the persistent database volume.
+
+## Evidence still requiring capture
+
+- Genuine screenshots of the running application: participant event catalogue, event details/enrolment, participant dashboard/profile, organiser dashboard, event/category management, enrolments and result entry.
+- Actual Swagger UI and GitHub Actions success screenshots if requested by the rubric.
+- The generated SVG CI summary in `../docs/ci-cd-green-build.svg` is not a screenshot of the GitHub website.
+- A live Azure upload needs a real Azure Storage account and credentials. Automated fake-storage tests are not evidence of a live cloud upload.
+
+Unlisted YouTube demonstration: [https://youtu.be/ODFcxN-v5O8](https://youtu.be/ODFcxN-v5O8)
