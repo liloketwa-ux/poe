@@ -1,0 +1,5 @@
+@model IReadOnlyList<EnrolmentDto>
+@{ViewData["Title"]="Event enrolments";}
+<div class="section-heading"><div><div class="eyebrow">ORGANISER WORKSPACE</div><h1>Event enrolments</h1><p class="muted">@ViewBag.EventName</p></div></div>
+@if(ViewBag.Error is string error){<div class="alert alert-warning">@error</div>}
+<div class="panel table-responsive"><table class="table align-middle"><thead><tr><th>Participant</th><th>Email</th><th>Category</th><th>Enrolled</th><th>Status</th></tr></thead><tbody>@foreach(var x in Model){<tr><td>@x.ParticipantName</td><td>@x.ParticipantEmail</td><td>@x.CategoryName</td><td>@x.EnrolmentDate.ToString("dd MMM yyyy")</td><td><span class="status @(x.Status=="Confirmed"?"confirmed":"cancelled")">@x.Status</span></td></tr>}</tbody></table>@if(Model.Count==0){<p class="muted">No enrolments have been received yet.</p>}</div>
