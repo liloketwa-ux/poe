@@ -55,13 +55,13 @@ dotnet run --project Part_2_Submission/RaceDay.Api/RaceDay.Api.csproj
 dotnet test Part_2_Submission/RaceDay.Api.Tests/RaceDay.Api.Tests.csproj --configuration Release
 ```
 
-Tests cover registration validation, duplicate users, password hashing, login/session persistence, anonymous access, role rejection, organiser event ownership, participant enrolment persistence, Swagger availability, profile updates and the safe failure response for Azure uploads when storage credentials are absent.
+Eleven xUnit integration tests passed in GitHub Actions (0 failed, 0 skipped) on 9 November 2026. Coverage includes registration validation, duplicate accounts, password hashing, login/session persistence, anonymous access, role rejection, organiser event ownership, participant enrolment persistence, Swagger availability, profile updates, event banner upload through a test storage adapter, Azure's missing-credential guard, and organiser result capture / participant finish-history retrieval.
 
 The Azure upload code can be exercised end to end only with a real Azure Blob Storage account and `AzureBlobStorage__ConnectionString`. Without credentials, upload endpoints intentionally return HTTP 503.
 
 ## CI/CD and submission evidence
 
-`.github/workflows/raceday-ci.yml` restores and builds the solution, runs the API integration tests and uploads the TRX test result. A screenshot of a successful run must be captured from the GitHub Actions page after the workflow is green and added to `docs/ci-cd-green-build.png`.
+`.github/workflows/raceday-ci.yml` restores and builds the solution, runs the API integration tests and uploads the TRX test result. The verified run is [RaceDay .NET CI #42599642557](https://github.com/liloketwa-ux/poe/actions/runs/42599642557). The repository contains a generated evidence summary at `docs/ci-cd-green-build.svg`; it is based on the actual run metadata and is not a browser screenshot of the GitHub page.
 
 Unlisted YouTube demonstration: `PASTE-UNLISTED-YOUTUBE-LINK-HERE`.
 
