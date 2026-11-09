@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -69,7 +70,7 @@ app.UseExceptionHandler(errorApp => errorApp.Run(async context =>
     {
         Status = StatusCodes.Status500InternalServerError,
         Title = "An unexpected server error occurred.",
-        Detail = app.Environment.IsDevelopment() ? "See server logs for the exception." : null
+        Detail = app.Environment.IsDevelopment() ? context.Features.Get<IExceptionHandlerFeature>()?.Error.ToString() : null
     });
 }));
 app.UseHttpsRedirection();
