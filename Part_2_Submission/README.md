@@ -61,7 +61,7 @@ The Azure upload code can be exercised end to end only with a real Azure Blob St
 
 ## CI/CD and submission evidence
 
-`.github/workflows/raceday-ci.yml` restores and builds the solution, runs the API integration tests and uploads the TRX test result. The verified run is [RaceDay .NET CI #42599939947](https://github.com/liloketwa-ux/poe/actions/runs/42599939947). The repository contains a generated evidence summary at `docs/ci-cd-green-build.svg`; it is based on the actual run metadata and is not a browser screenshot of the GitHub page.
+`.github/workflows/raceday-ci.yml` restores and builds the solution, runs the API integration tests and uploads the TRX test result. The verified run is [RaceDay .NET CI #42600468489](https://github.com/liloketwa-ux/poe/actions/runs/42600468489). The repository contains a generated evidence summary at `docs/ci-cd-green-build.svg`; it is based on the actual run metadata and is not a browser screenshot of the GitHub page.
 
 Unlisted YouTube demonstration: `PASTE-UNLISTED-YOUTUBE-LINK-HERE`.
 
