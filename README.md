@@ -73,7 +73,7 @@ See the Part 3 README for optional Azure configuration and stop instructions.
 
 The [successful RaceDay .NET 8 CI run #42637090817](https://github.com/liloketwa-ux/poe/actions/runs/42637090817) completed on 9 November 2026: API, MVC and tests built; all 12 API integration tests passed; Docker Compose validated; and both Docker images built. The [workflow history](https://github.com/liloketwa-ux/poe/actions/workflows/raceday-ci.yml) contains subsequent runs.
 
-The generated SVG evidence summary is based on workflow metadata, not a screenshot of the GitHub Actions page. Capture a genuine screenshot of the successful run and screenshots of the actual running MVC application where required by the rubric.
+The generated SVG evidence summary is based on workflow metadata, not a screenshot of the GitHub Actions page. To capture genuine screenshots from the running application (not design previews), run the manual [RaceDay live UI evidence workflow](.github/workflows/raceday-ui-evidence.yml). It starts the Compose stack on a GitHub-hosted runner, opens the MVC and Swagger pages in Chromium, and commits the resulting PNGs to [docs/evidence/ui](docs/evidence/ui). Capture a separate browser screenshot of the successful Actions run if the rubric requires proof of the GitHub Actions page itself.
 
 ## Demonstration video
 
