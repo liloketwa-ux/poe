@@ -25,8 +25,10 @@ public sealed class AuthAndRoleTests : IAsyncLifetime
     {
         var bad = await _client.PostAsJsonAsync("/api/auth/register", new { firstName="Rae", lastName="Tester", email="bad@example.com", password="Secret123!", role="Admin" });
         Assert.True(bad.StatusCode == HttpStatusCode.BadRequest, await bad.Content.ReadAsStringAsync());
-        Assert.Equal(HttpStatusCode.Created, (await Register("Participant", "hashed@example.com")).StatusCode);
-        Assert.Equal(HttpStatusCode.Conflict, (await Register("Participant", "hashed@example.com")).StatusCode);
+        var registered = await Register("Participant", "hashed@example.com");
+        Assert.True(registered.StatusCode == HttpStatusCode.Created, await registered.Content.ReadAsStringAsync());
+        var duplicate = await Register("Participant", "hashed@example.com");
+        Assert.True(duplicate.StatusCode == HttpStatusCode.Conflict, await duplicate.Content.ReadAsStringAsync());
         using var scope = _factory.Services.CreateScope();
         var user = scope.ServiceProvider.GetRequiredService<RaceDayDbContext>().Users.Single(x => x.Email == "hashed@example.com");
         Assert.NotEqual("Secret123!", user.PasswordHash);
@@ -38,7 +40,8 @@ public sealed class AuthAndRoleTests : IAsyncLifetime
     {
         await Register("Participant", "login@example.com");
         Assert.Equal(HttpStatusCode.Unauthorized, (await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest("login@example.com", "wrong-password"))).StatusCode);
-        Assert.Equal(HttpStatusCode.OK, (await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest("login@example.com", "Secret123!"))).StatusCode);
+        var good = await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest("login@example.com", "Secret123!"));
+        Assert.True(good.StatusCode == HttpStatusCode.OK, await good.Content.ReadAsStringAsync());
         Assert.Equal(HttpStatusCode.OK, (await _client.GetAsync("/api/profile/me")).StatusCode);
     }
 
