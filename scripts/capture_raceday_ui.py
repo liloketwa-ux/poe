@@ -22,7 +22,7 @@ def login(page, email, password):
     open_page(page, f"{BASE}/Account/Login")
     page.locator('input[name="Email"]').fill(email)
     page.locator('input[name="Password"]').fill(password)
-    page.locator('form button[type="submit"]').click()
+    page.locator('form button').click()
     page.wait_for_url(re.compile(r".*/Dashboard(?:/Index)?(?:\?.*)?$"), timeout=30000)
     expect(page.locator("h1")).to_contain_text("dashboard", ignore_case=True)
 
