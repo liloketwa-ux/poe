@@ -11,6 +11,9 @@ namespace RaceDay.Api.Controllers;
 [Route("api/events/{eventId:int}/route")]
 public sealed class RoutesController(RaceDayDbContext db) : ApiControllerBase(db)
 {
+    /// <summary>Gets public course route information for an event.</summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpGet]
     [AllowAnonymous]
     public async Task<IActionResult> Get(int eventId, CancellationToken token)
@@ -20,6 +23,13 @@ public sealed class RoutesController(RaceDayDbContext db) : ApiControllerBase(db
         return route is null ? NotFound() : Ok(ToResponse(route));
     }
 
+    /// <summary>Creates or replaces course route information for an event owned by the Organiser.</summary>
+    /// <remarks>JSON body: startLocation, finishLocation, routeUrl, elevationGainM and notes.</remarks>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpPut]
     [Authorize(Roles = "Organiser")]
     public async Task<IActionResult> Put(int eventId, RouteRequest request, CancellationToken token)

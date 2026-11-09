@@ -15,6 +15,14 @@ public sealed class FilesController(RaceDayDbContext db, IFileStorageService sto
     private int UserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
     private static readonly string[] AllowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
+    /// <summary>Uploads an event banner to Azure Blob Storage for an event owned by the Organiser.</summary>
+    /// <remarks>Multipart form field: file. Accepted formats: JPEG, PNG and WebP; maximum size: 5 MB.</remarks>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
     [HttpPost("events/{eventId:int}/banner")]
     [Authorize(Roles = "Organiser")]
     [RequestSizeLimit(5_242_880)]
@@ -30,6 +38,12 @@ public sealed class FilesController(RaceDayDbContext db, IFileStorageService sto
         return Ok(new { eventId, imageUrl = item.BannerImageUrl });
     }
 
+    /// <summary>Uploads a profile picture for the signed-in user to Azure Blob Storage.</summary>
+    /// <remarks>Multipart form field: file. Accepted formats: JPEG, PNG and WebP; maximum size: 5 MB.</remarks>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
     [HttpPost("profile/me/picture")]
     [RequestSizeLimit(5_242_880)]
     public async Task<IActionResult> UploadProfilePicture(IFormFile file, CancellationToken token)

@@ -10,12 +10,21 @@ namespace RaceDay.Api.Controllers;
 [Route("api")]
 public sealed class ResultsController(RaceDayDbContext db) : ApiControllerBase(db)
 {
+    /// <summary>Lists race results belonging to the signed-in Participant.</summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [HttpGet("results/me")]
     [Authorize(Roles = "Participant")]
     public async Task<IActionResult> Mine(CancellationToken token) => Ok(await ResultQuery()
         .Where(x => x.Enrolment!.ParticipantId == CurrentUserId).OrderByDescending(x => x.Enrolment!.Event!.EventDate)
         .Select(ToResponse()).ToListAsync(token));
 
+    /// <summary>Lists results for an event owned by the signed-in Organiser.</summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpGet("events/{eventId:int}/results")]
     [Authorize(Roles = "Organiser")]
     public async Task<IActionResult> ForEvent(int eventId, CancellationToken token)
@@ -25,6 +34,14 @@ public sealed class ResultsController(RaceDayDbContext db) : ApiControllerBase(d
         return Ok(await ResultQuery().Where(x => x.Enrolment!.EventId == eventId).Select(ToResponse()).ToListAsync(token));
     }
 
+    /// <summary>Records a finish result for a confirmed enrolment.</summary>
+    /// <remarks>JSON body: enrolmentId, finishTime, overallPosition, categoryPosition, averagePace and finishStatus.</remarks>
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     [HttpPost("events/{eventId:int}/results")]
     [Authorize(Roles = "Organiser")]
     public async Task<IActionResult> Create(int eventId, ResultRequest request, CancellationToken token)
@@ -44,6 +61,12 @@ public sealed class ResultsController(RaceDayDbContext db) : ApiControllerBase(d
         return Created($"/api/events/{eventId}/results/{result.ResultId}", response);
     }
 
+    /// <summary>Corrects a result recorded for an event owned by the Organiser.</summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpPut("events/{eventId:int}/results/{resultId:int}")]
     [Authorize(Roles = "Organiser")]
     public async Task<IActionResult> Update(int eventId, int resultId, ResultUpdateRequest request, CancellationToken token)

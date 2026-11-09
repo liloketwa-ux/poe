@@ -10,6 +10,11 @@ namespace RaceDay.Api.Controllers;
 [AllowAnonymous]
 public sealed class WeatherController(RaceDayDbContext db, IHttpClientFactory clients) : ControllerBase
 {
+    /// <summary>Gets current weather information for the city where an event is held.</summary>
+    /// <remarks>Uses the public Open-Meteo geocoding and forecast services.</remarks>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status502BadGateway)]
     [HttpGet]
     public async Task<IActionResult> Get(int eventId, CancellationToken token)
     {
