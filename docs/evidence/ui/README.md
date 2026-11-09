@@ -10,5 +10,5 @@ Demo login accounts are for this local evidence environment only:
 - Organiser: organiser@raceday.demo
 - Participant: participant@raceday.demo
 - Password: RaceDayDemo!2026
-
-Azure uploads are not represented by these screenshots; the evidence environment does not contain a real Azure Storage connection string.
+github commits <img width="1336" height="624" alt="Screenshot 2026-11-09 175521" src="https://github.com/user-attachments/assets/37831565-271c-4350-b1d1-b203f280753d" />
+<img width="1253" height="628" alt="Screenshot 2026-11-09 175543" src="https://github.com/user-attachments/assets/d2c9dfd6-999e-4495-850c-a245bf9765a7" />
