@@ -47,9 +47,11 @@ The same build and test steps run in GitHub Actions for pushes to `main` and `ra
 
 From `Part_3_Submission/`, set `SA_PASSWORD` and run `docker compose up --build`. See the Part 3 README for the full instructions and optional Azure configuration.
 
-## Submission evidence
+## Verified CI/CD
 
-- Add a screenshot of the actual successful workflow run at `docs/ci-cd-green-build.png`.
-- Add real UI screenshots to the POE after running the MVC application.
+![RaceDay .NET CI successful verification summary](docs/ci-cd-green-build.svg)
+
+The linked GitHub Actions run completed successfully on 9 November 2026: solution restore/build, 11 API integration tests, Docker Compose validation, API image build and MVC image build all passed. [Open the full run on GitHub](https://github.com/liloketwa-ux/poe/actions/runs/42599642557). The SVG is a generated evidence summary from the run metadata, not a screenshot of the GitHub website.
+- The POE includes UI design previews with sample data. Replace/add genuine screenshots after running the MVC application locally or in Docker.
 - Replace the YouTube placeholders in Part 2 and Part 3 READMEs with your unlisted demonstration link.
 - The assignment requires at least 20 meaningful commits for each of Parts 2 and 3. Review the actual history and ensure each commit represents work you completed and understand.
