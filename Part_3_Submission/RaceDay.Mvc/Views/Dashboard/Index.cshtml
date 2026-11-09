@@ -1,4 +1,14 @@
 @model DashboardViewModel
+@functions {
+    string Ordinal(int? value)
+    {
+        if (value is null) return "—";
+        var n = value.Value; var rem100 = n % 100;
+        var suffix = rem100 is >= 11 and <= 13 ? "th" : n % 10 switch { 1 => "st", 2 => "nd", 3 => "rd", _ => "th" };
+        return $"{n}{suffix}";
+    }
+}
+
 @{ViewData["Title"]="Dashboard";}
 <div class="section-heading"><div><div class="eyebrow">YOUR RACEDAY</div><h1>@(Model.Role=="Organiser"?"Organiser dashboard":"Participant dashboard")</h1><p class="muted">Welcome, @Context.Session.GetString("DisplayName").</p></div>@if(Model.Role=="Organiser"){<a class="btn btn-accent" asp-controller="Events" asp-action="Create">+ Create event</a>}</div>
 @if(ViewBag.Error is string error){<div class="alert alert-warning">@error</div>}
@@ -8,5 +18,5 @@
 }else{
 <div class="row g-3 mb-4"><div class="col-md-6"><div class="metric-card"><span>My entries</span><strong>@Model.Enrolments.Count</strong></div></div><div class="col-md-6"><div class="metric-card"><span>Recorded results</span><strong>@Model.Results.Count</strong></div></div></div>
 <h2 class="h4">My events</h2><div class="table-responsive"><table class="table align-middle"><thead><tr><th>Event</th><th>Category</th><th>Enrolled</th><th>Status</th></tr></thead><tbody>@foreach(var e in Model.Enrolments){<tr><td>@e.EventName</td><td>@e.CategoryName</td><td>@e.EnrolmentDate.ToString("dd MMM yyyy")</td><td><span class="status @(e.Status=="Confirmed"?"confirmed":"cancelled")">@e.Status</span></td></tr>}</tbody></table></div>
-<h2 class="h4 mt-5">My results</h2><div class="table-responsive"><table class="table align-middle"><thead><tr><th>Event</th><th>Date</th><th>Category</th><th>Time</th><th>Position</th></tr></thead><tbody>@foreach(var r in Model.Results){<tr><td>@r.EventName</td><td>@r.EventDate.ToString("dd MMM yyyy")</td><td>@r.CategoryName</td><td>@(r.FinishTime?.ToString("HH:mm:ss")??r.FinishStatus)</td><td>@(r.OverallPosition?.ToString()??"—")</td></tr>}</tbody></table></div>
+<h2 class="h4 mt-5">My results</h2><div class="table-responsive"><table class="table align-middle"><thead><tr><th>Event</th><th>Date</th><th>Category</th><th>Time</th><th>Finish position</th></tr></thead><tbody>@foreach(var r in Model.Results){<tr><td>@r.EventName</td><td>@r.EventDate.ToString("dd MMM yyyy")</td><td>@r.CategoryName</td><td>@(r.FinishTime?.ToString("HH:mm:ss")??r.FinishStatus)</td><td>@Ordinal(r.OverallPosition) out of @r.TotalFinishers finishers</td></tr>}</tbody></table></div>
 }
