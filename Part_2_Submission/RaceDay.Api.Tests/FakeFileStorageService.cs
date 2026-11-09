@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using RaceDay.Api.Services;
 
 namespace RaceDay.Api.Tests;
