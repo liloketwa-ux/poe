@@ -24,7 +24,7 @@ public sealed class AuthAndRoleTests : IAsyncLifetime
     public async Task RegistrationRejectsInvalidRoleAndPersistsOnlyHash()
     {
         var bad = await _client.PostAsJsonAsync("/api/auth/register", new { firstName="Rae", lastName="Tester", email="bad@example.com", password="Secret123!", role="Admin" });
-        Assert.Equal(HttpStatusCode.BadRequest, bad.StatusCode);
+        Assert.True(bad.StatusCode == HttpStatusCode.BadRequest, await bad.Content.ReadAsStringAsync());
         Assert.Equal(HttpStatusCode.Created, (await Register("Participant", "hashed@example.com")).StatusCode);
         Assert.Equal(HttpStatusCode.Conflict, (await Register("Participant", "hashed@example.com")).StatusCode);
         using var scope = _factory.Services.CreateScope();
