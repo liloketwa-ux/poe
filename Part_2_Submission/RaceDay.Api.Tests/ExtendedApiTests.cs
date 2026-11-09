@@ -60,9 +60,9 @@ public sealed class ExtendedApiTests : IAsyncLifetime
     private async Task RegisterAndLogin(string role, string email)
     {
         var register = await _client.PostAsJsonAsync("/api/auth/register",
-            new RegisterRequest("Race", "Tester", email, "Secret123!", role, null));
+            new { firstName = "Race", lastName = "Tester", email, password = "Secret123!", role, phone = (string?)null });
         register.EnsureSuccessStatusCode();
-        var login = await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest(email, "Secret123!"));
+        var login = await _client.PostAsJsonAsync("/api/auth/login", new { email, password = "Secret123!" });
         login.EnsureSuccessStatusCode();
     }
     private static EventRequest ValidEvent() => new("Storage Test Run", "Azure storage integration test",
