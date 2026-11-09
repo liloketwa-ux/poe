@@ -9,7 +9,7 @@ public sealed class AccountController(RaceDayApiClient api):Controller
     {
         if(!ModelState.IsValid)return View(model);
         var r=await api.PostAsync<LoginViewModel,UserDto>("/api/auth/login",model,token);
-        if(!r.Success||r.Data is null){ModelState.AddModelError(" ",r.Error??"Login failed.");return View(model);}
+        if(!r.Success||r.Data is null){ModelState.AddModelError("",r.Error??"Login failed.");return View(model);}
         HttpContext.Session.SetInt32("UserId",r.Data.UserId);HttpContext.Session.SetString("Role",r.Data.Role);HttpContext.Session.SetString("DisplayName",r.Data.FirstName+" "+r.Data.LastName);
         return RedirectToAction("Index","Dashboard");
     }

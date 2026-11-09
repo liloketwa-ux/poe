@@ -12,5 +12,6 @@ public sealed class CategoriesController(RaceDayApiClient api):Controller
         if(!r.Success){ModelState.AddModelError("",r.Error??"Category could not be created.");return View(model);}return RedirectToAction("Details","Events",new{id=model.EventId});
     }
     private bool IsOrganiser()=>HttpContext.Session.GetString("Role")=="Organiser";
-    private IActionResult Denied()=>HttpContext.Session.GetString("Role") is null?RedirectToAction("Login","Account"):Forbid();
+    private IActionResult Denied()=>HttpContext.Session.GetString("Role") is null?RedirectToAction("Login","Account"):AccessDenied();
+    private IActionResult AccessDenied(){TempData["Error"]="You do not have access to that page.";return RedirectToAction("Index","Dashboard");}
 }

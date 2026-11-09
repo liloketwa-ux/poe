@@ -17,5 +17,6 @@ public sealed class ResultsController(RaceDayApiClient api):Controller
         TempData[r.Success?"Notice":"Error"]=r.Success?"Result recorded.":r.Error;return RedirectToAction(nameof(Entry),new{eventId=form.EventId});
     }
     private bool IsOrganiser()=>HttpContext.Session.GetString("Role")=="Organiser";
-    private IActionResult Denied()=>HttpContext.Session.GetString("Role") is null?RedirectToAction("Login","Account"):Forbid();
+    private IActionResult Denied()=>HttpContext.Session.GetString("Role") is null?RedirectToAction("Login","Account"):AccessDenied();
+    private IActionResult AccessDenied(){TempData["Error"]="You do not have access to that page.";return RedirectToAction("Index","Dashboard");}
 }
