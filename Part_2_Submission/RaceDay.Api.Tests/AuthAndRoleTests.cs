@@ -39,8 +39,8 @@ public sealed class AuthAndRoleTests : IAsyncLifetime
     public async Task LoginCreatesSessionAndRejectsInvalidCredentials()
     {
         await Register("Participant", "login@example.com");
-        Assert.Equal(HttpStatusCode.Unauthorized, (await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest("login@example.com", "wrong-password"))).StatusCode);
-        var good = await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest("login@example.com", "Secret123!"));
+        Assert.Equal(HttpStatusCode.Unauthorized, (await _client.PostAsJsonAsync("/api/auth/login", new { email = "login@example.com", password = "wrong-password" })).StatusCode);
+        var good = await _client.PostAsJsonAsync("/api/auth/login", new { email = "login@example.com", password = "Secret123!" });
         Assert.True(good.StatusCode == HttpStatusCode.OK, await good.Content.ReadAsStringAsync());
         Assert.Equal(HttpStatusCode.OK, (await _client.GetAsync("/api/profile/me")).StatusCode);
     }
@@ -84,9 +84,9 @@ public sealed class AuthAndRoleTests : IAsyncLifetime
     }
 
     private Task<HttpResponseMessage> Register(string role, string email) =>
-        _client.PostAsJsonAsync("/api/auth/register", new RegisterRequest("Test", "Person", email, "Secret123!", role, null));
+        _client.PostAsJsonAsync("/api/auth/register", new { firstName = "Test", lastName = "Person", email, password = "Secret123!", role, phone = (string?)null });
     private async Task Login(string email) =>
-        (await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest(email, "Secret123!"))).EnsureSuccessStatusCode();
+        (await _client.PostAsJsonAsync("/api/auth/login", new { email, password = "Secret123!" })).EnsureSuccessStatusCode();
     private static EventRequest ValidEvent() => new("Test Run", "Testing event",
         DateOnly.FromDateTime(DateTime.UtcNow.AddDays(20)), DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-2)),
         DateOnly.FromDateTime(DateTime.UtcNow.AddDays(15)), "Test Stadium", "Johannesburg", "Gauteng", 10, "Run", "Open");
