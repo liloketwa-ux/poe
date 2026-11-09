@@ -2,15 +2,28 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RaceDay.Api.DTOs;
 
-public sealed record RegisterRequest(
-    [Required, StringLength(60, MinimumLength = 2)] string FirstName,
-    [Required, StringLength(60, MinimumLength = 2)] string LastName,
-    [Required, EmailAddress, StringLength(255)] string Email,
-    [Required, MinLength(8), StringLength(100)] string Password,
-    [Required] string Role,
-    [Phone, StringLength(30)] string? Phone);
+public sealed class RegisterRequest
+{
+    public RegisterRequest() { }
+    public RegisterRequest(string firstName, string lastName, string email, string password, string role, string? phone)
+    {
+        FirstName = firstName; LastName = lastName; Email = email; Password = password; Role = role; Phone = phone;
+    }
+    [Required, StringLength(60, MinimumLength = 2)] public string FirstName { get; set; } = "";
+    [Required, StringLength(60, MinimumLength = 2)] public string LastName { get; set; } = "";
+    [Required, EmailAddress, StringLength(255)] public string Email { get; set; } = "";
+    [Required, MinLength(8), StringLength(100)] public string Password { get; set; } = "";
+    [Required] public string Role { get; set; } = "";
+    [Phone, StringLength(30)] public string? Phone { get; set; }
+}
 
-public sealed record LoginRequest([Required, EmailAddress] string Email, [Required] string Password);
+public sealed class LoginRequest
+{
+    public LoginRequest() { }
+    public LoginRequest(string email, string password) { Email = email; Password = password; }
+    [Required, EmailAddress] public string Email { get; set; } = "";
+    [Required] public string Password { get; set; } = "";
+}
 public sealed record UserResponse(int UserId, string FirstName, string LastName, string Email, string Role, string? Phone, string? ProfileImageUrl);
 public sealed record UpdateProfileRequest([Required, StringLength(60, MinimumLength = 2)] string FirstName,
     [Required, StringLength(60, MinimumLength = 2)] string LastName, [Phone, StringLength(30)] string? Phone);
