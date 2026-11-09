@@ -63,6 +63,9 @@ public static class DemoSeed
         var cycle = new Category { EventId = second.EventId, Name = "42 km Cycle", DistanceKm = 42m, EntryFee = 280m, MaxEntries = 1500, MinAge = 18 };
         var walk = new Category { EventId = third.EventId, Name = "10 km Family Walk", DistanceKm = 10m, EntryFee = 80m, MaxEntries = 2000, MinAge = 12 };
         db.Categories.AddRange(half, ten, cycle, walk);
+        // Persist categories first so their identity keys are available to the enrolment below.
+        await db.SaveChangesAsync(token);
+
         db.Routes.AddRange(
             new RaceDayRoute { EventId = first.EventId, StartLocation = "Constitution Hill", FinishLocation = "Constitution Hill", ElevationGainM = 210, Notes = "Urban road loop." },
             new RaceDayRoute { EventId = second.EventId, StartLocation = "Green Point Urban Park", FinishLocation = "Green Point Urban Park", ElevationGainM = 480, Notes = "Coastal and city sections." },

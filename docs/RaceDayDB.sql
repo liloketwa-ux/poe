@@ -104,8 +104,8 @@ CREATE TABLE dbo.Categories
     CONSTRAINT CK_Categories_EntryFee CHECK (EntryFee >= 0),
     CONSTRAINT CK_Categories_MaxEntries CHECK (MaxEntries > 0),
     CONSTRAINT CK_Categories_Ages CHECK (
-        (MinAge IS NULL AND MaxAge IS NULL)
-        OR (MinAge IS NOT NULL AND MaxAge IS NOT NULL AND MinAge >= 0 AND MaxAge >= MinAge)
+        (MinAge IS NULL OR MinAge >= 0)
+        AND (MaxAge IS NULL OR (MaxAge >= 0 AND (MinAge IS NULL OR MaxAge >= MinAge)))
     )
 );
 GO

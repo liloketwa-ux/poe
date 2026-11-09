@@ -1,4 +1,8 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using RaceDay.Api.Data;
+using RaceDay.Api.Models;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -17,6 +21,25 @@ public sealed class ExtendedApiTests : IAsyncLifetime
         await _factory.InitialiseAsync();
     }
     public Task DisposeAsync() { _client.Dispose(); _factory.Dispose(); return Task.CompletedTask; }
+
+    [Fact]
+    public async Task DemoSeedCreatesValidRelatedSampleData()
+    {
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<RaceDayDbContext>();
+        await DemoSeed.SeedAsync(db, new PasswordHasher<User>());
+
+        Assert.Equal(2, await db.Users.CountAsync());
+        Assert.Equal(3, await db.Events.CountAsync());
+        Assert.Equal(4, await db.Categories.CountAsync());
+        Assert.Equal(1, await db.Enrolments.CountAsync());
+        Assert.Equal(1, await db.Results.CountAsync());
+
+        var enrolment = await db.Enrolments.Include(x => x.Category).SingleAsync();
+        Assert.NotNull(enrolment.Category);
+        Assert.Equal(enrolment.EventId, enrolment.Category!.EventId);
+        Assert.Equal(enrolment.CategoryId, enrolment.Category.CategoryId);
+    }
 
     [Fact]
     public async Task SwaggerDocumentIsAvailable()

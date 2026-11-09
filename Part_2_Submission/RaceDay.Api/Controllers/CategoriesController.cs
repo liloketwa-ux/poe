@@ -59,7 +59,8 @@ public sealed class CategoriesController(RaceDayDbContext db) : ApiControllerBas
     private static string? Validate(CategoryRequest x)
     {
         if (x.DistanceKm <= 0 || x.EntryFee < 0 || x.MaxEntries <= 0) return "DistanceKm and MaxEntries must be positive, and EntryFee cannot be negative.";
-        if (x.MinAge.HasValue != x.MaxAge.HasValue || (x.MinAge.HasValue && (x.MinAge < 0 || x.MaxAge < x.MinAge))) return "Supply a valid minimum and maximum age range, or leave both blank.";
+        if (x.MinAge is < 0 || x.MaxAge is < 0 || (x.MinAge.HasValue && x.MaxAge.HasValue && x.MaxAge < x.MinAge))
+            return "Age limits must be non-negative and the maximum age cannot be lower than the minimum age.";
         return null;
     }
     private static CategorySummary ToSummary(Category x) => new(x.CategoryId, x.EventId, x.Name, x.DistanceKm,

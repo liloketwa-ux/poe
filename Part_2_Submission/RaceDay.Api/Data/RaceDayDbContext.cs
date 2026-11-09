@@ -75,7 +75,7 @@ public sealed class RaceDayDbContext(DbContextOptions<RaceDayDbContext> options)
                 t.HasCheckConstraint("CK_Categories_Distance", "[DistanceKm] > 0");
                 t.HasCheckConstraint("CK_Categories_EntryFee", "[EntryFee] >= 0");
                 t.HasCheckConstraint("CK_Categories_MaxEntries", "[MaxEntries] > 0");
-                t.HasCheckConstraint("CK_Categories_Ages", "([MinAge] IS NULL AND [MaxAge] IS NULL) OR ([MinAge] IS NOT NULL AND [MaxAge] IS NOT NULL AND [MinAge] >= 0 AND [MaxAge] >= [MinAge])");
+                t.HasCheckConstraint("CK_Categories_Ages", "([MinAge] IS NULL OR [MinAge] >= 0) AND ([MaxAge] IS NULL OR ([MaxAge] >= 0 AND ([MinAge] IS NULL OR [MaxAge] >= [MinAge])))");
             });
         });
         modelBuilder.Entity<Enrolment>(e =>
