@@ -51,7 +51,7 @@ From `Part_3_Submission/`, set `SA_PASSWORD` and run `docker compose up --build`
 
 ![RaceDay .NET CI successful verification summary](docs/ci-cd-green-build.svg)
 
-The linked GitHub Actions run completed successfully on 9 November 2026: solution restore/build, 11 API integration tests, Docker Compose validation, API image build and MVC image build all passed. [Open the full run on GitHub](https://github.com/liloketwa-ux/poe/actions/runs/42599642557). The SVG is a generated evidence summary from the run metadata, not a screenshot of the GitHub website.
+The linked GitHub Actions run completed successfully on 9 November 2026: solution restore/build, 11 API integration tests, Docker Compose validation, API image build and MVC image build all passed. [Open the full run on GitHub](https://github.com/liloketwa-ux/poe/actions/runs/42599939947). The SVG is a generated evidence summary from the run metadata, not a screenshot of the GitHub website.
 - The POE includes UI design previews with sample data. Replace/add genuine screenshots after running the MVC application locally or in Docker.
 - Replace the YouTube placeholders in Part 2 and Part 3 READMEs with your unlisted demonstration link.
 - The assignment requires at least 20 meaningful commits for each of Parts 2 and 3. Review the actual history and ensure each commit represents work you completed and understand.
