@@ -83,8 +83,6 @@ if (app.Configuration.GetValue<bool>("Database:EnsureCreated"))
     var db = scope.ServiceProvider.GetRequiredService<RaceDayDbContext>();
     await db.Database.EnsureCreatedAsync();
 }
-app.Run();
-public partial class Program { }
 if (app.Configuration.GetValue<bool>("Database:SeedDemoData"))
 {
     await using var scope = app.Services.CreateAsyncScope();
@@ -92,3 +90,5 @@ if (app.Configuration.GetValue<bool>("Database:SeedDemoData"))
     var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
     await DemoSeed.SeedAsync(db, hasher);
 }
+app.Run();
+public partial class Program { }
