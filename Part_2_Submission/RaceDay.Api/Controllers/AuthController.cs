@@ -12,6 +12,7 @@ using RaceDay.Api.Models;
 namespace RaceDay.Api.Controllers;
 
 /// <summary>Registration, login and logout for the Organiser and Participant roles.</summary>
+[ApiController]
 [Route("api/auth")]
 public sealed class AuthController(RaceDayDbContext db, IPasswordHasher<User> passwordHasher) : ControllerBase
 {
@@ -24,7 +25,7 @@ public sealed class AuthController(RaceDayDbContext db, IPasswordHasher<User> pa
         var role = request.Role.Trim();
         if (!string.Equals(role, "Organiser", StringComparison.OrdinalIgnoreCase) &&
             !string.Equals(role, "Participant", StringComparison.OrdinalIgnoreCase))
-            return BadRequest(new { message = "Role must be Organiser or Participant.", receivedRole = request.Role });
+            return BadRequest(new { message = "Role must be Organiser or Participant." });
         var email = request.Email.Trim().ToLowerInvariant();
         if (await db.Users.AnyAsync(x => x.Email == email, token))
             return Conflict(new { message = "An account with this email already exists." });
