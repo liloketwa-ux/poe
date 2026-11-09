@@ -73,8 +73,11 @@ See the Part 3 README for optional Azure configuration and stop instructions.
 
 The [successful RaceDay .NET 8 CI run #42637090817](https://github.com/liloketwa-ux/poe/actions/runs/42637090817) completed on 9 November 2026: API, MVC and tests built; all 12 API integration tests passed; Docker Compose validated; and both Docker images built. The [workflow history](https://github.com/liloketwa-ux/poe/actions/workflows/raceday-ci.yml) contains subsequent runs.
 
-The generated SVG evidence summary is based on workflow metadata, not a screenshot of the GitHub Actions page. To capture genuine screenshots from the running application (not design previews), run the manual [RaceDay live UI evidence workflow](.github/workflows/raceday-ui-evidence.yml). It starts the Compose stack on a GitHub-hosted runner, opens the MVC and Swagger pages in Chromium, and commits the resulting PNGs to [docs/evidence/ui](docs/evidence/ui). Capture a separate browser screenshot of the successful Actions run if the rubric requires proof of the GitHub Actions page itself.
+The [RaceDay live UI evidence run #42653350447](https://github.com/liloketwa-ux/poe/actions/runs/42653350447) ran the application stack on a GitHub-hosted runner, captured the running MVC and Swagger pages in Chromium, and committed the PNG screenshots to [docs/evidence/ui](docs/evidence/ui). These are running-application captures, not design previews.
 
-## Demonstration video
+## Video presentations
 
-[Unlisted YouTube demonstration](https://youtu.be/ODFcxN-v5O8)
+The project has two separate unlisted YouTube presentations:
+
+- **Interface demonstration — running RaceDay application:** [Watch the interface demonstration](https://youtu.be/ODFcxN-v5O8)
+- **Code walkthrough — source code, API/MVC structure, application logic and technical decisions:** [Watch the coding walkthrough](https://youtu.be/InnJ0NeXg9w)
