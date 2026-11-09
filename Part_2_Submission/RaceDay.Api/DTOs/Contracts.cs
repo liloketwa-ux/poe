@@ -61,7 +61,7 @@ public sealed record ResultUpdateRequest(TimeOnly? FinishTime, int? OverallPosit
     int? CategoryPosition, decimal? AveragePace, string FinishStatus = "Finished");
 public sealed record ResultResponse(int ResultId, int EnrolmentId, string ParticipantName,
     string EventName, DateOnly EventDate, string CategoryName, TimeOnly? FinishTime,
-    int? OverallPosition, int? CategoryPosition, decimal? AveragePace, string FinishStatus);
+    int? OverallPosition, int TotalFinishers, int? CategoryPosition, decimal? AveragePace, string FinishStatus);
 public sealed record RouteRequest([Required] string StartLocation, [Required] string FinishLocation,
     [Url, StringLength(500)] string? RouteUrl, int? ElevationGainM, [StringLength(500)] string? Notes);
 public sealed record RouteResponse(int RouteId, int EventId, string StartLocation, string FinishLocation,
