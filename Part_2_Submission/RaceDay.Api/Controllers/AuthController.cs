@@ -24,7 +24,7 @@ public sealed class AuthController(RaceDayDbContext db, IPasswordHasher<User> pa
         var role = request.Role.Trim();
         if (!string.Equals(role, "Organiser", StringComparison.OrdinalIgnoreCase) &&
             !string.Equals(role, "Participant", StringComparison.OrdinalIgnoreCase))
-            return BadRequest(new { message = "Role must be Organiser or Participant." });
+            return BadRequest(new { message = "Role must be Organiser or Participant.", receivedRole = request.Role });
         var email = request.Email.Trim().ToLowerInvariant();
         if (await db.Users.AnyAsync(x => x.Email == email, token))
             return Conflict(new { message = "An account with this email already exists." });
