@@ -21,7 +21,7 @@ public sealed class ExtendedApiTests : IAsyncLifetime
     public async Task SwaggerDocumentIsAvailable()
     {
         var response = await _client.GetAsync("/swagger/v1/swagger.json");
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.True(response.StatusCode == HttpStatusCode.OK, await response.Content.ReadAsStringAsync());
         Assert.Contains("RaceDay REST API", await response.Content.ReadAsStringAsync());
     }
 
