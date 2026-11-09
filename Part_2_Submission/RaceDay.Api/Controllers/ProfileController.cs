@@ -5,6 +5,7 @@ using RaceDay.Api.DTOs;
 
 namespace RaceDay.Api.Controllers;
 
+[ApiController]
 [Route("api/profile")]
 [Authorize]
 public sealed class ProfileController(RaceDayDbContext db) : ControllerBase
