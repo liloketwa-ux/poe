@@ -67,7 +67,7 @@ public sealed class ResultsController(RaceDayDbContext db) : ApiControllerBase(d
         new ResultResponse(x.ResultId, x.EnrolmentId,
             x.Enrolment!.Participant!.FirstName + " " + x.Enrolment.Participant.LastName,
             x.Enrolment.Event!.Name, x.Enrolment.Event.EventDate, x.Enrolment.Category!.Name,
-            x.FinishTime, x.OverallPosition, x.CategoryPosition, x.AveragePace, x.FinishStatus);
+            x.FinishTime, x.OverallPosition, x.Enrolment.Event!.Enrolments.Count(e => e.Status == "Confirmed" && e.Result != null && e.Result.FinishStatus == "Finished"), x.CategoryPosition, x.AveragePace, x.FinishStatus);
     private static string? Validate(TimeOnly? time, int? overall, int? category, decimal? pace, string status)
     {
         if (overall is <= 0 || category is <= 0 || pace is <= 0) return "Positions and average pace must be positive values.";
