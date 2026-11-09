@@ -25,6 +25,14 @@ jobs:
         run: dotnet build RaceDay.sln --configuration Release --no-restore
       - name: Run API integration tests
         run: dotnet test Part_2_Submission/RaceDay.Api.Tests/RaceDay.Api.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=raceday-tests.trx"
+      - name: Validate Docker Compose configuration
+        run: docker compose -f Part_3_Submission/docker-compose.yml config --quiet
+        env:
+          SA_PASSWORD: LocalRaceDayC1!StrongPassword
+      - name: Build API Docker image
+        run: docker build -f Part_2_Submission/RaceDay.Api/Dockerfile Part_2_Submission/RaceDay.Api --tag raceday-api:ci
+      - name: Build MVC Docker image
+        run: docker build -f Part_3_Submission/RaceDay.Mvc/Dockerfile Part_3_Submission/RaceDay.Mvc --tag raceday-mvc:ci
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
