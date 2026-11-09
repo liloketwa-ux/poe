@@ -51,7 +51,7 @@ public sealed class RaceDayDbContext(DbContextOptions<RaceDayDbContext> options)
                 t.HasCheckConstraint("CK_Events_Status", "[Status] IN ('Draft','Open','Closed','Completed','Cancelled')");
             });
         });
-        modelBuilder.Entity<Route>(e =>
+        modelBuilder.Entity<RaceDayRoute>(e =>
         {
             e.HasKey(x => x.RouteId);
             e.HasIndex(x => x.EventId).IsUnique();
