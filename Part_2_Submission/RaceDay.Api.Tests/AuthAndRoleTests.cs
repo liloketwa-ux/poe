@@ -83,6 +83,37 @@ public sealed class AuthAndRoleTests : IAsyncLifetime
         Assert.Single(mine!); Assert.Equal(ev.EventId, mine![0].EventId);
     }
 
+
+    [Fact]
+    public async Task OrganiserCanPublishResultAndParticipantCanViewOwnFinishPosition()
+    {
+        await Register("Organiser", "results-host@example.com"); await Login("results-host@example.com");
+        var created = await _client.PostAsJsonAsync("/api/events", ValidEvent());
+        var ev = await created.Content.ReadFromJsonAsync<EventSummary>();
+        Assert.NotNull(ev);
+        var categoryResponse = await _client.PostAsJsonAsync($"/api/events/{ev!.EventId}/categories",
+            new CategoryRequest("5 km Results", 5, 50, 100, null, null));
+        var category = await categoryResponse.Content.ReadFromJsonAsync<CategorySummary>();
+        Assert.NotNull(category);
+
+        await Register("Participant", "results-runner@example.com"); await Login("results-runner@example.com");
+        var enrolled = await _client.PostAsJsonAsync($"/api/events/{ev.EventId}/enrolments", new EnrolRequest(category!.CategoryId));
+        Assert.Equal(HttpStatusCode.Created, enrolled.StatusCode);
+        var entry = await enrolled.Content.ReadFromJsonAsync<EnrolmentResponse>();
+        Assert.NotNull(entry);
+
+        await Login("results-host@example.com");
+        var posted = await _client.PostAsJsonAsync($"/api/events/{ev.EventId}/results",
+            new ResultRequest(entry!.EnrolmentId, new TimeOnly(0, 28, 42), 1, 1, 5.74m, "Finished"));
+        Assert.True(posted.StatusCode == HttpStatusCode.Created, await posted.Content.ReadAsStringAsync());
+
+        await Login("results-runner@example.com");
+        var history = await _client.GetFromJsonAsync<List<ResultResponse>>("/api/results/me");
+        Assert.Single(history!);
+        Assert.Equal(1, history![0].OverallPosition);
+        Assert.Equal(1, history[0].TotalFinishers);
+    }
+
     private Task<HttpResponseMessage> Register(string role, string email) =>
         _client.PostAsJsonAsync("/api/auth/register", new { firstName = "Test", lastName = "Person", email, password = "Secret123!", role, phone = (string?)null });
     private async Task Login(string email) =>
