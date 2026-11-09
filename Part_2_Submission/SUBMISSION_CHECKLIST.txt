@@ -1,8 +1,41 @@
-PART 2 SUBMISSION CHECKLIST
+# RaceDay assessment completion checklist
 
-[ ] Replace the first name, surname, student number and module code placeholders in the report cover page.
-[ ] If lecturer or peer feedback on Part 1 was provided, add the genuine feedback and explain the resulting change. Do not invent feedback.
-[ ] Open Part_2_Submission/prototype/index.html in a browser and confirm that it works on your own computer.
-[ ] Review the report and ensure the final format matches your lecturer's submission instructions.
-[ ] Ensure the reference list and in-text citations are included.
-[ ] If your submission requires screenshots and Word/PDF report files inside GitHub, add those files from the downloaded submission package as binary attachments.
+## Part 1 — Planning/database
+- [ ] ERD included and readable
+- [ ] API endpoint plan included
+- [ ] SQL Server script included
+
+## Part 2 — REST API
+- [x] ASP.NET Core Web API in C#
+- [x] EF Core Code-First entity model and SQL Server provider
+- [x] Organiser and Participant role restrictions
+- [x] Password hashing and HTTP-only authentication session cookie
+- [x] Event, category, enrolment, result, route, profile and weather endpoints
+- [x] Swagger integration in source
+- [x] xUnit integration test project included
+- [x] GitHub Actions workflow includes API build/test
+- [ ] Green GitHub Actions run verified after pushing this branch
+- [ ] Add genuine successful-build screenshot
+- [ ] Verify at least 20 meaningful Part 2 commits
+
+## Part 3 — MVC
+- [x] ASP.NET Core MVC application source and views
+- [x] MVC consumes API via server-side HTTP client; no database connection
+- [x] Organiser and Participant screens
+- [x] Image uploads go through API
+- [x] API Azure Blob Storage integration source
+- [x] MVC Dockerfile and Compose orchestration
+- [x] CI workflow builds MVC project
+- [ ] Run application locally or in Docker and verify all user journeys
+- [ ] Configure real Azure Storage account and perform upload test
+- [ ] Verify at least 20 meaningful Part 3 commits
+
+## Portfolio of Evidence and ARC submission
+- [ ] Add actual screenshots captured from the running application
+- [ ] Add actual screenshot from successful GitHub Actions workflow
+- [ ] Record and upload unlisted YouTube demonstration
+- [ ] Replace YouTube placeholder in README files
+- [ ] Finalise Word/PDF Portfolio of Evidence with actual student details and evidence
+- [ ] Submit the correct GitHub branch/repository link on ARC
+
+Checked boxes indicate source code or configuration has been added. They do not imply runtime verification where not stated.
