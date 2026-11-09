@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RaceDay.Api.Models;
+using RaceDayRoute = RaceDay.Api.Models.Route;
 
 namespace RaceDay.Api.Data;
 
@@ -7,7 +8,7 @@ public sealed class RaceDayDbContext(DbContextOptions<RaceDayDbContext> options)
 {
     public DbSet<User> Users => Set<User>();
     public DbSet<Event> Events => Set<Event>();
-    public DbSet<Route> Routes => Set<Route>();
+    public DbSet<RaceDayRoute> Routes => Set<RaceDayRoute>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Enrolment> Enrolments => Set<Enrolment>();
     public DbSet<Result> Results => Set<Result>();
