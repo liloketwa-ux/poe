@@ -65,7 +65,7 @@ public static class DemoSeed
         db.Categories.AddRange(half, ten, cycle, walk);
         db.Routes.AddRange(
             new RaceDayRoute { EventId = first.EventId, StartLocation = "Constitution Hill", FinishLocation = "Constitution Hill", ElevationGainM = 210, Notes = "Urban road loop." },
-            new Route { EventId = second.EventId, StartLocation = "Green Point Urban Park", FinishLocation = "Green Point Urban Park", ElevationGainM = 480, Notes = "Coastal and city sections." },
+            new RaceDayRoute { EventId = second.EventId, StartLocation = "Green Point Urban Park", FinishLocation = "Green Point Urban Park", ElevationGainM = 480, Notes = "Coastal and city sections." },
             new Route { EventId = third.EventId, StartLocation = "Moses Mabhida Stadium", FinishLocation = "Moses Mabhida Stadium", ElevationGainM = 65, Notes = "Flat beachfront family route." });
         var enrolment = new Enrolment
         {
