@@ -18,9 +18,10 @@ public sealed class AccountController(RaceDayApiClient api):Controller
     {
         if(!ModelState.IsValid)return View(model);
         if(model.Role is not ("Organiser" or "Participant")){ModelState.AddModelError(nameof(model.Role),"Choose Organiser or Participant.");return View(model);}
-        var r=await api.PostAsync<RegisterViewModel,UserDto>("/api/auth/register",model,token);
+        var registrationPayload = new { firstName=model.FirstName, lastName=model.LastName, email=model.Email, password=model.Password, role=model.Role, phone=model.Phone };
+        var r=await api.PostAsync<object,UserDto>("/api/auth/register",registrationPayload,token);
         if(!r.Success){ModelState.AddModelError("",r.Error??"Registration failed.");return View(model);}
-        var login=await api.PostAsync<LoginViewModel,UserDto>("/api/auth/login",new LoginViewModel{Email=model.Email,Password=model.Password},token);
+        var login=await api.PostAsync<object,UserDto>("/api/auth/login",new { email=model.Email, password=model.Password },token);
         if(login.Success&&login.Data is not null){HttpContext.Session.SetInt32("UserId",login.Data.UserId);HttpContext.Session.SetString("Role",login.Data.Role);HttpContext.Session.SetString("DisplayName",login.Data.FirstName+" "+login.Data.LastName);return RedirectToAction("Index","Dashboard");}
         TempData["Notice"]="Account created. Please log in.";return RedirectToAction(nameof(Login));
     }
