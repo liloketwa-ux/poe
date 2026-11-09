@@ -15,7 +15,7 @@
 - [x] Swagger integration and endpoint documentation in source
 - [x] xUnit HTTP integration test project included
 - [x] GitHub Actions workflow includes API build/test
-- [ ] Verify the new .NET 8 workflow after the latest source changes
+- [x] Verify .NET 8 workflow: latest run #42637090817 succeeded with 12 tests passing
 - [ ] Capture a genuine successful-build screenshot from GitHub Actions
 - [x] More than 20 distinct Part 2 API/test implementation commits appear in repository history
 

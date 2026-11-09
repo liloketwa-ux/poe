@@ -71,7 +71,7 @@ See the Part 3 README for optional Azure configuration and stop instructions.
 
 ## CI/CD and evidence
 
-The GitHub Actions workflow restores and builds the solution, runs API integration tests, validates Docker Compose and builds the API/MVC images. See the [RaceDay .NET CI workflow](https://github.com/liloketwa-ux/poe/actions/workflows/raceday-ci.yml).
+The [successful RaceDay .NET 8 CI run #42637090817](https://github.com/liloketwa-ux/poe/actions/runs/42637090817) completed on 9 November 2026: API, MVC and tests built; all 12 API integration tests passed; Docker Compose validated; and both Docker images built. The [workflow history](https://github.com/liloketwa-ux/poe/actions/workflows/raceday-ci.yml) contains subsequent runs.
 
 The generated SVG evidence summary is based on workflow metadata, not a screenshot of the GitHub Actions page. Capture a genuine screenshot of the successful run and screenshots of the actual running MVC application where required by the rubric.
 

@@ -7,7 +7,7 @@ The RaceDay ASP.NET Core MVC front end consumes the Part 2 API using the server-
 - Register, login and logout as Organiser or Participant.
 - Session-aware navigation and protected role-specific actions.
 - Public event catalogue with type and province filters, event details and categories.
-- Organiser dashboard, event create/edit/delete, category creation, enrolment list and result capture.
+- Organiser dashboard, event create/edit/delete, category create/edit/delete, enrolment list and result capture.
 - Participant dashboard, personal enrolments and results, profile edit and profile photo.
 - Event banner and profile images are forwarded by MVC to the API. Only the API connects to Azure Blob Storage.
 - Responsive Bootstrap UI with RaceDay dark-green, orange and neutral styling.
@@ -63,7 +63,7 @@ Do not add `-v` unless you intend to delete the persistent database volume.
 ## Evidence still requiring capture
 
 - Genuine screenshots of the running application: participant event catalogue, event details/enrolment, participant dashboard/profile, organiser dashboard, event/category management, enrolments and result entry.
-- Actual Swagger UI and GitHub Actions success screenshots if requested by the rubric.
+- Actual Swagger UI and GitHub Actions success screenshots if requested by the rubric. The latest verified [CI run #42637090817](https://github.com/liloketwa-ux/poe/actions/runs/42637090817) passed all 12 integration tests and both image builds.
 - The generated SVG CI summary in `../docs/ci-cd-green-build.svg` is not a screenshot of the GitHub website.
 - A live Azure upload needs a real Azure Storage account and credentials. Automated fake-storage tests are not evidence of a live cloud upload.
 

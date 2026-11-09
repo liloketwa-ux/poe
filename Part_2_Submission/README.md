@@ -61,7 +61,7 @@ Event banner and profile-picture uploads are implemented in the API. The storage
 
 ## CI/CD and submission evidence
 
-The workflow `.github/workflows/raceday-ci.yml` restores and builds the solution, runs API integration tests, validates Docker Compose and builds both Docker images. See the [RaceDay .NET CI workflow](https://github.com/liloketwa-ux/poe/actions/workflows/raceday-ci.yml).
+The workflow `.github/workflows/raceday-ci.yml` uses .NET 8. The verified [RaceDay .NET 8 CI run #42637090817](https://github.com/liloketwa-ux/poe/actions/runs/42637090817) completed successfully: solution build passed, 12 integration tests passed (0 failed, 0 skipped), Docker Compose validated, and API/MVC Docker images built. See the [workflow history](https://github.com/liloketwa-ux/poe/actions/workflows/raceday-ci.yml).
 
 The generated SVG evidence summary is based on workflow metadata; it is not a browser screenshot of GitHub Actions. Capture a genuine screenshot of the successful run if the rubric requires one.
 
