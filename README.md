@@ -1,93 +1,55 @@
-# RaceDay – Part 1: System Planning and Database
+# RaceDay — Event Management Platform
 
-RaceDay is a full-stack event management platform designed for South African road running, walking and cycling events. The system allows organisers to manage events, categories, enrolments and participant results, while participants can discover events, enter categories and view their personal performance history.
+RaceDay is a South African road-running, walking and cycling event platform. Organisers publish events, manage categories, review enrolments and capture race results. Participants discover events, enrol and view their personal results.
 
-## User roles
+**Technology:** C#, ASP.NET Core Web API, ASP.NET Core MVC, Entity Framework Core, SQL Server, Swagger, xUnit, Azure Blob Storage and Docker.
 
-### Organiser
-An Organiser can create, edit and delete events, manage event categories, view all enrolments for their events, and capture or update participant results.
+## Repository map
 
-### Participant
-A Participant can register and log in, browse upcoming events, enrol in an available event category, view their own enrolments, and track their personal results.
+| Part | Location | Deliverables |
+|---|---|---|
+| Part 1 — Planning/database | `docs/` | ERD, endpoint plan, SQL Server schema |
+| Part 2 — REST API | `Part_2_Submission/` | ASP.NET Core API, EF Core, cookie/session authentication, role access, Swagger, tests |
+| Part 3 — MVC | `Part_3_Submission/` | MVC front end, API client, role-specific UI, Azure upload forwarding, Docker |
+| CI/CD | `.github/workflows/raceday-ci.yml` | Builds all projects and runs API integration tests |
 
-Role-based access is part of the API design and will be enforced in Part 2, then reflected in the MVC interface in Part 3.
+The previous CampusConnect HTML/JavaScript prototype was not the required application and has been removed from the corrected Part 2 submission.
 
-## Part 1 deliverables
+## Part 1
 
-The complete planning artefacts are in `/docs`:
+The Part 1 RaceDay planning artefacts remain in `docs/`: ERD, API endpoint plan and SQL Server schema.
 
-1. ERD (`RaceDay_ERD.png` and `RaceDay_ERD.pdf`)
-2. REST API endpoint plan (`raceday-endpoint-plan.md`)
-3. SQL Server schema and seed script (`RaceDayDB.sql`)
+## Part 2 — RESTful API development
 
-## Database overview
+The API is written in C# and uses EF Core Code-First with SQL Server. It provides Organiser and Participant roles, Identity password hashing, an HTTP-only authentication cookie and session state, role-protected endpoints and Swagger documentation.
 
-The relational model contains six entities:
+See [Part 2 README](Part_2_Submission/README.md).
 
-- Users
-- Events
-- Routes
-- Categories
-- Enrolments
-- Results
+## Part 3 — MVC application
 
-The SQL script includes primary keys, foreign keys, NOT NULL constraints, UNIQUE constraints, CHECK constraints and DEFAULT values, followed by sample data containing two Organisers, two Participants, three Events, event categories and sample enrolments.
+The MVC application consumes Part 2 through a typed server-side HTTP client. It has no direct database access. It provides public event discovery, Organiser and Participant dashboards, event and category management, enrolments, results and profile pages. Event banners and profile photos are sent through the API to Azure Blob Storage.
 
-## Running the database script
+See [Part 3 README](Part_3_Submission/README.md).
 
-1. Open SQL Server Management Studio (SSMS).
-2. Connect to a SQL Server instance.
-3. Open `docs/RaceDayDB.sql`.
-4. Execute the entire script.
-5. Confirm that the final six validation queries return seeded records.
+## Build and test
 
-## CI/CD
+Requires the .NET 10 SDK. From the repository root:
 
-The GitHub Actions workflow is stored in `.github/workflows/validate-docs.yml`. It checks that the repository structure and required Part 1 documentation files exist.
-
-### Successful CI build screenshot
-
-> **Submission step:** After pushing the repository to GitHub, open the Actions tab, run or wait for `Validate RaceDay Part 1`, and take a screenshot showing the green successful check. Replace the placeholder image below with that real GitHub screenshot before submitting.
-
-`docs/ci-cd-green-build.png`
-
-## Video presentation
-
-> **Submission step:** Replace the placeholder below with your own YouTube link. The assessment requires a real voiceover; do not use an AI-generated voice.
-
-YouTube: `PASTE-YOUR-YOUTUBE-LINK-HERE`
-
-## GitHub commit requirement
-
-A minimum of 20 meaningful commits is required for Part 1. Use the suggested sequence in `docs/commit-plan-part1.md` as a working guide, but create the commits from your own GitHub account as you complete the work.
-
-## Repository structure
-
-```text
-RaceDay/
-├── .github/
-│   └── workflows/
-│       └── validate-docs.yml
-├── docs/
-│   ├── RaceDayDB.sql
-│   ├── RaceDay_ERD.png
-│   ├── RaceDay_ERD.pdf
-│   ├── commit-plan-part1.md
-│   ├── erd.dot
-│   ├── raceday-endpoint-plan.md
-│   └── README-docs.md
-└── README.md
+```powershell
+dotnet restore RaceDay.sln
+dotnet build RaceDay.sln --configuration Release
+dotnet test Part_2_Submission/RaceDay.Api.Tests/RaceDay.Api.Tests.csproj --configuration Release
 ```
 
-## Interaction Design POE — Part 2 (CampusConnect)
+The same build and test steps run in GitHub Actions for pushes to `main` and `raceday-*` branches and for pull requests to `main`.
 
-Part 2 files are in [`Part_2_Submission/`](Part_2_Submission/README.md).
+## Docker
 
-- [Prototype source](Part_2_Submission/prototype/index.html) — open or download `index.html`, `style.css`, and `app.js` together to run the prototype locally.
-- [Part 2 report (Markdown)](Part_2_Submission/reports/Part_2_Prototype_Implementation_Report.md)
-- [Functional test results](Part_2_Submission/evidence/test_results.txt)
-- [Structured test results](Part_2_Submission/evidence/test_results.json)
-- [Submission checklist](Part_2_Submission/SUBMISSION_CHECKLIST.txt)
+From `Part_3_Submission/`, set `SA_PASSWORD` and run `docker compose up --build`. See the Part 3 README for the full instructions and optional Azure configuration.
 
-The Word/PDF report files and original screenshot evidence remain in the downloadable Part 2 package shared in the conversation; the repository has the readable report source, prototype files and test records.
+## Submission evidence
 
+- Add a screenshot of the actual successful workflow run at `docs/ci-cd-green-build.png`.
+- Add real UI screenshots to the POE after running the MVC application.
+- Replace the YouTube placeholders in Part 2 and Part 3 READMEs with your unlisted demonstration link.
+- The assignment requires at least 20 meaningful commits for each of Parts 2 and 3. Review the actual history and ensure each commit represents work you completed and understand.
