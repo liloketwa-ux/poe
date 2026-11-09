@@ -60,11 +60,13 @@ docker compose -f .\Part_3_Submission\docker-compose.yml down
 
 Do not add `-v` unless you intend to delete the persistent database volume.
 
-## Evidence still requiring capture
+## Evidence
 
-- Genuine screenshots of the running application: participant event catalogue, event details/enrolment, participant dashboard/profile, organiser dashboard, event/category management, enrolments and result entry.
-- Actual Swagger UI and GitHub Actions success screenshots if requested by the rubric. The latest verified [CI run #42637090817](https://github.com/liloketwa-ux/poe/actions/runs/42637090817) passed all 12 integration tests and both image builds.
-- The generated SVG CI summary in `../docs/ci-cd-green-build.svg` is not a screenshot of the GitHub website.
-- A live Azure upload needs a real Azure Storage account and credentials. Automated fake-storage tests are not evidence of a live cloud upload.
+The [RaceDay live UI evidence workflow run #42653350447](https://github.com/liloketwa-ux/poe/actions/runs/42653350447) ran the application on a GitHub-hosted runner and captured the MVC and Swagger pages in Chromium. The resulting PNG screenshots are committed in [docs/evidence/ui](../docs/evidence/ui). These are screenshots of the running application rather than design previews.
 
-Unlisted YouTube demonstration: [https://youtu.be/ODFcxN-v5O8](https://youtu.be/ODFcxN-v5O8)
+The [RaceDay .NET 8 CI run #42637090817](https://github.com/liloketwa-ux/poe/actions/runs/42637090817) successfully built the solution, passed all 12 API integration tests, validated Docker Compose and built both Docker images.
+
+## Video presentations
+
+- **Interface demonstration — running RaceDay application:** [Watch the interface demonstration](https://youtu.be/ODFcxN-v5O8)
+- **Code walkthrough — MVC structure, API communication, Razor views, Blob Storage upload flow and Docker setup:** [Watch the coding walkthrough](https://youtu.be/InnJ0NeXg9w)
