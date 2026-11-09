@@ -10,11 +10,23 @@ namespace RaceDay.Api.Controllers;
 [Route("api")]
 public sealed class EnrolmentsController(RaceDayDbContext db) : ApiControllerBase(db)
 {
+    /// <summary>Lists enrolments belonging to the signed-in Participant.</summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [HttpGet("enrolments/me")]
     [Authorize(Roles = "Participant")]
     public async Task<IActionResult> Mine(CancellationToken token) => Ok(await QueryEnrolments()
         .Where(x => x.ParticipantId == CurrentUserId).OrderByDescending(x => x.EnrolmentDate).Select(ToResponse()).ToListAsync(token));
 
+    /// <summary>Enrols the signed-in Participant in an event category.</summary>
+    /// <remarks>JSON body: categoryId. Returns 409 when registration is closed, the category is full or the Participant is already enrolled.</remarks>
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     [HttpPost("events/{eventId:int}/enrolments")]
     [Authorize(Roles = "Participant")]
     public async Task<IActionResult> Enrol(int eventId, EnrolRequest request, CancellationToken token)
@@ -39,6 +51,13 @@ public sealed class EnrolmentsController(RaceDayDbContext db) : ApiControllerBas
         return Created($"/api/enrolments/{enrolment.EnrolmentId}", result);
     }
 
+    /// <summary>Cancels an eligible enrolment belonging to the signed-in Participant.</summary>
+    /// <remarks>An enrolment with an existing result cannot be cancelled.</remarks>
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     [HttpDelete("enrolments/{id:int}")]
     [Authorize(Roles = "Participant")]
     public async Task<IActionResult> Cancel(int id, CancellationToken token)
@@ -50,6 +69,11 @@ public sealed class EnrolmentsController(RaceDayDbContext db) : ApiControllerBas
         item.Status = "Cancelled"; await Db.SaveChangesAsync(token); return NoContent();
     }
 
+    /// <summary>Lists enrolments for an event owned by the signed-in Organiser.</summary>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpGet("events/{eventId:int}/enrolments")]
     [Authorize(Roles = "Organiser")]
     public async Task<IActionResult> ForEvent(int eventId, CancellationToken token)
