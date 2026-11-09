@@ -49,9 +49,9 @@ Open MVC at http://localhost:5101 and Swagger at http://localhost:5100/swagger. 
 
 ## Evidence to add after your own run
 
-- Screenshot of the public event list and both role dashboards.
+- UI design previews are in the accompanying POE evidence pack. Capture your actual running application before submitting.
 - Screenshot of event details, categories, enrolments and result entry.
-- Screenshot of an actual successful GitHub Actions workflow run.
+- CI verification summary: `../docs/ci-cd-green-build.svg`; successful workflow: [RaceDay .NET CI #42599642557](https://github.com/liloketwa-ux/poe/actions/runs/42599642557).
 - Unlisted YouTube video link: `PASTE-UNLISTED-YOUTUBE-LINK-HERE`.
 
 Do not insert mock CI evidence. Demonstrate the Azure upload with a configured storage account during the recording if that integration is being assessed.
