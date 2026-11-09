@@ -1,0 +1,34 @@
+name: RaceDay .NET CI
+
+on:
+  push:
+    branches: [main, "raceday-*"]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install .NET 10 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore solution
+        run: dotnet restore RaceDay.sln
+      - name: Build all projects
+        run: dotnet build RaceDay.sln --configuration Release --no-restore
+      - name: Run API integration tests
+        run: dotnet test Part_2_Submission/RaceDay.Api.Tests/RaceDay.Api.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=raceday-tests.trx"
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: raceday-test-results
+          path: "**/*.trx"
+          if-no-files-found: warn
